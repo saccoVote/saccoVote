@@ -23,6 +23,8 @@ from base import views
 from django.urls import include, path
 from rest_framework import routers
 
+from base.views import CreateSaccoView
+
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
@@ -32,6 +34,7 @@ router.register(r'groups', views.GroupViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('auth/signin', obtain_auth_token, name='signin'),
+    path('auth/signup', CreateSaccoView.as_view(), name='signup'),
     path('admin/', admin.site.urls),
 ]
 
