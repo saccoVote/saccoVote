@@ -85,18 +85,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
-    'supabase': {
+    'db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('SUPABASE_DB_NAME'),
-        'USER': config('SUPABASE_DB_USER'),
-        'PASSWORD': config('SUPABASE_DB_PASSWORD'),
-        'HOST': config('SUPABASE_DB_HOST'),
-        'PORT': config('SUPABASE_DB_PORT'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
 # Set supabase as default DB
-DATABASES['default'] = DATABASES['supabase']
+DATABASES['default'] = DATABASES['db']
 
 
 # Password validation
