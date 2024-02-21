@@ -1,3 +1,4 @@
+//Button.js
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 
 export default function Button({ label }) {

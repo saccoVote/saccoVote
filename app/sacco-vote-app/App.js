@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image } from 'react-native';
 
-
+//importing all necessary components
 import Button from './components/Button';
 import ImageViewer from './components/ImageViewer';
 
