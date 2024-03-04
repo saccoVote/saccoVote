@@ -6,8 +6,12 @@ from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
-from base.serializers import GroupSerializer, UserSerializer, SaccoSerializer, CreateUserSaccoSerializer
+from base.models import CustomUser
+from base.serializers import GroupSerializer, CustomUserSerializer, SaccoSerializer, CreateUserSaccoSerializer, \
+    CustomAuthTokenSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -15,8 +19,8 @@ class UserViewSet(viewsets.ModelViewSet):
     API endpoint that allows users to be viewed or edited.
     """
     # TODO: limit these endpoints to super admins
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    queryset = CustomUser.objects.all().order_by('-date_joined')
+    serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -38,3 +42,14 @@ class CreateSaccoView(APIView):
             return Response({'message': 'Sacco created successfully!', 'id': user_sacco.id},
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    serializer_class = CustomAuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})

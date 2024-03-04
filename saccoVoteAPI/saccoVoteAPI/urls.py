@@ -25,7 +25,7 @@ from base import views
 from django.urls import include, path
 from rest_framework import routers, permissions
 
-from base.views import CreateSaccoView
+from base.views import CreateSaccoView, CustomObtainAuthToken
 
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
@@ -52,7 +52,7 @@ urlpatterns = [
     path('swagger/', swagger_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', swagger_schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    path('auth/signin', obtain_auth_token, name='signin'),
+    path('auth/signin', CustomObtainAuthToken.as_view(), name='signin'),
     path('auth/signup', CreateSaccoView.as_view(), name='signup'),
 ]
 

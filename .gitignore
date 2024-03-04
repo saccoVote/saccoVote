@@ -4,3 +4,4 @@ venv
 .env
 migrations/
 .http
+__pycache__/
