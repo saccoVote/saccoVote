@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
-const logo = require('../assets/logo.png');
+const logo = require('../assets/images/logo.png');
 
 const HomeScreen = ({ navigation }) => {
   const handleContinue = () => {
