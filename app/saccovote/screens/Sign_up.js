@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
 
 const logo = require('../assets/images/logo2.png');
 
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 200,
         resizeMode: 'contain',
     },
     voteText: {
@@ -124,6 +124,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     keyboardAvoidingView: {
+        //backgroundColor: '#D9D9D9',
+        //borderTopRightRadius: 25,
         width: '100%',
         alignItems: 'center',
     },
@@ -138,9 +140,9 @@ const styles = StyleSheet.create({
     button: {
         width: '80%',
         backgroundColor: '#5FD25F',
-        padding: 20,
+        padding: 15,
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: 25,
         marginTop: 20,
     },
     buttonText: {
