@@ -15,27 +15,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import routers, permissions
 
-from base import views
-
-from django.urls import include, path
-from rest_framework import routers
-
-from base.views import CreateSaccoView
+from base.views import CreateSaccoView, CustomObtainAuthToken, CheckUserView
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+# router.register(r'users', views.UserViewSet)
+# router.register(r'groups', views.GroupViewSet)
+
+
+swagger_schema_view = get_schema_view(
+    openapi.Info(
+        title="Sacco Vote API",
+        default_version='v1',
+        description="Sacco Vote API Documentation"
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny,],
+)
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('auth/signin', obtain_auth_token, name='signin'),
-    path('auth/signup', CreateSaccoView.as_view(), name='signup'),
     path('admin/', admin.site.urls),
+    path('swagger<format>/', swagger_schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', swagger_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', swagger_schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    path('auth/signin', CustomObtainAuthToken.as_view(), name='signin'),
+    path('auth/signup', CreateSaccoView.as_view(), name='signup'),
+    path('auth/check-user/<str:email>', CheckUserView.as_view(), name='check-user'),
 ]
 
 urlpatterns += router.urls
