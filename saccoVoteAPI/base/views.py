@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -53,3 +53,15 @@ class CustomObtainAuthToken(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
+
+
+class CheckUserView(APIView):
+    def get(self, request, *args, **kwargs):
+        email_to_check = kwargs.get('email')
+        user = None
+        try:
+            user = CustomUser.objects.get(email=email_to_check)
+        finally:
+            if user is not None and user.is_active:
+                return Response({'message': 'User is active'}, status=status.HTTP_200_OK)
+            return Response({'message': 'User does not exist'}, status=404)

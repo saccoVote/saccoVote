@@ -15,17 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework.authtoken.views import obtain_auth_token
-
-from base import views
-
-from django.urls import include, path
 from rest_framework import routers, permissions
 
-from base.views import CreateSaccoView, CustomObtainAuthToken
+from base.views import CreateSaccoView, CustomObtainAuthToken, CheckUserView
 
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
@@ -54,6 +49,7 @@ urlpatterns = [
 
     path('auth/signin', CustomObtainAuthToken.as_view(), name='signin'),
     path('auth/signup', CreateSaccoView.as_view(), name='signup'),
+    path('auth/check-user/<str:email>', CheckUserView.as_view(), name='check-user'),
 ]
 
 urlpatterns += router.urls
