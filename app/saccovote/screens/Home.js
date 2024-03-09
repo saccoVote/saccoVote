@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
         placeholder="Email"
         keyboardType="email-address"
       />
-      <TouchableOpacity onPress={handleContinue} style={styles.button}>
+      <TouchableOpacity onPress={handleContinue}  style={styles.button}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
       <Text style={styles.terms}>Terms and conditions apply.</Text>
@@ -67,11 +67,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#34C759',
     height: 50,
     width: '100%',
+    display:flex,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
     padding: 10,
   },
+
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
