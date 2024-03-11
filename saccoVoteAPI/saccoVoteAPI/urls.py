@@ -22,6 +22,7 @@ from rest_framework import routers, permissions
 
 from base.views import CreateSaccoView, CustomObtainAuthToken, CheckUserView
 
+
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
 # router.register(r'groups', views.GroupViewSet)
