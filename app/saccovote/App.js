@@ -4,9 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-import HomeScreen from './screens/Home';
-import SignupScreen from './screens/Sign_up';
+import EmailScreen from './screens/Email';
+import SignupScreen from './screens/SignUp';
 import SplashScreen from './screens/Splash';
+
 
 const App = () => {
 
@@ -14,10 +15,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component = {SplashScreen} options={{headerShown:false}} />
-        <Stack.Screen name="Home" component={HomeScreen}  options = {{headerShown:false}}/>
-        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="EmailScreen" component={EmailScreen}  options = {{headerShown:false}}/>
+        <Stack.Screen name="SignupScreen" component={SignupScreen} options = {{headerShown:false}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -4,29 +4,22 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 const logo = require('../assets/images/logo2.png');
 
 const SplashScreen = ({navigation}) => {
-
+    // TODO: check if token and navigate to home, otherwise navigate to email
     return(
-       
         <View style={styles.container}>
-        <TouchableOpacity  style={styles.container} onPress={() => {
-            navigation.navigate("Home")
-        }}>
-            <Text style={styles.title}>Modernizing Sacco Voting Experience</Text>
-            <Image source={logo} style={styles.logo} />
-        </TouchableOpacity>
+            <TouchableOpacity  style={styles.container} onPress={() => {
+                navigation.navigate("EmailScreen")
+            }}>
+                <Text style={styles.title}>Modernizing Sacco Voting Experience</Text>
+                <Image source={logo} style={styles.logo} />
+                
+            </TouchableOpacity>
         </View>
-
-
-      
-        
     );
-
-
 };
 
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
@@ -48,9 +41,6 @@ const styles = StyleSheet.create({
         color: '#000000',
         marginTop: 100,
       }
-
-
-   
 });
 
 export default SplashScreen;
