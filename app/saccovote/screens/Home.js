@@ -6,13 +6,13 @@ const logo = require('../assets/images/logo2.png');
 
 const HomeScreen = ({ navigation }) => {
   const handleContinue = () => {
-    navigation.navigate('Signup');
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
-      <Text style={styles.title}>Vote</Text>
+      {/* <Text style={styles.title}>Vote</Text> */}
       <Text style={styles.subTitle}>Enter your email address to continue</Text>
       <TextInput
         style={styles.input}
