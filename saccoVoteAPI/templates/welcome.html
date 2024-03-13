@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to saccoVote</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .container {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    p {
+      color: #777;
+    }
+    
+    .button {
+      display: inline-block;
+      /* background-color: #3498db; */
+      background-color: #bf1e2e;
+      border-radius: 3px;
+      color: #fff!important; /* important to override gmail blue for hrefs */
+      padding: 10px 20px;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    
+    .button:hover {
+      /* background-color: #1c87c9; */
+      opacity: 0.7;
+    }
+
+    span {
+        color: #bf1e2e;
+        font-weight: bold;
+    }
+
+    #name {
+        text-decoration: underline;
+        text-decoration-color: #bf1e2e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to saccoVote</h1>
+    <p>Dear <span id="name">{{ email }}</span>,</p>
+    <p>Thank you for joining saccoVote. We're thrilled to have your sacco {{ sacco_name }} on board.</p>
+    <p>Feel free to <span>explore</span> our mobile application.</p>
+    <p>If you have any questions or need assistance, don't hesitate to contact us.</p>
+    <a href="mailto:saccvote@gmail.com" class="button">Contact Us</a>
+    <p>Best regards,</p>
+    <p>saccoVote Team</p>
+  </div>
+</body>
+</html>
