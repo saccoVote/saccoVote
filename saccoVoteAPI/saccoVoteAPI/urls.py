@@ -20,7 +20,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
 
-from base.views import CreateSaccoView, CustomObtainAuthToken, CheckUserView
+from base.views import CreateUserSaccoView, CustomObtainAuthToken, CheckUserView
 from base.views.authenticated_user_view import AuthenticatedUserView
 
 router = routers.DefaultRouter()
@@ -49,7 +49,7 @@ urlpatterns = [
     path('redoc/', swagger_schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     path('auth/signin', CustomObtainAuthToken.as_view(), name='signin'),
-    path('auth/signup', CreateSaccoView.as_view(), name='signup'),
+    path('auth/signup', CreateUserSaccoView.as_view(), name='signup'),
     path('auth/check-user/<str:email>', CheckUserView.as_view(), name='check-user'),
     path('auth/authenticated-user', AuthenticatedUserView.as_view(), name='authenticated-user'),
 ]
