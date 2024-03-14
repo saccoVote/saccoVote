@@ -1,20 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { 
     StyleSheet, View, Text, TextInput, TouchableOpacity,
     Image, Alert, KeyboardAvoidingView, ScrollView, Platform, Animated} from 'react-native';
 import authService from '../services/AuthService';
 import Success from '../components/Success'
+// import { DataContext } from '../context/DataContext';
 
 
 const logo = require('../assets/images/logo2.png');
 
 // TODO: use toast instead of alert for most informational components
-const SignupScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation, route }) => {
     //Working with states for user inputs, intial value is empty string
-    const [saccoName, setSaccoName] = useState('sacco no ');
-    const [email, setEmail] = useState('koomealessandro@gmail.com');
-    const [password, setPassword] = useState('Data@123');
-    const [confirmPassword, setConfirmPassword] = useState('Data@123');
+    // const { data } = useContext(DataContext);
+    const [saccoName, setSaccoName] = useState('');
+    const [email, setEmail] = useState(
+        route.params?.email || ''
+    );
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [signingUp, setSigningUp] = useState(false)
 
     const [showSuccess, setShowSuccess] = useState(false);
 
@@ -50,23 +55,25 @@ const SignupScreen = ({ navigation }) => {
         }
 
         try {
+            setSigningUp(true)
             const response = await  authService.signup({sacco_name: saccoName, email, password})
             if (!response.ok){
                 Alert.alert('An error occurred', 'please try again.');
-                return;
+                setSigningUp(false)
             }else{
+                setSigningUp(false)
                 setShowSuccess(true)
-                return;
             }
         } catch(e) {
             Alert.alert('An error occurred', 'please try again');
-            return;
+            setSigningUp(false)
         }
+        return
     };
 
     return (
         <>
-        {showSuccess ?
+        {!showSuccess ?
             (<ScrollView contentContainerStyle={styles.container}>
                     <View style={styles.logoWrapper}>
                         <Image source={logo} style={styles.logo} />
@@ -103,7 +110,7 @@ const SignupScreen = ({ navigation }) => {
                             secureTextEntry
                             onChangeText={setConfirmPassword}
                         />
-                        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                        <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={signingUp}>
                             <Text style={styles.buttonText}>Sign up</Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>

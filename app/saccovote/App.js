@@ -8,6 +8,7 @@ import EmailScreen from './screens/Email';
 import SignupScreen from './screens/SignUp';
 import SplashScreen from './screens/Splash';
 import PasswordScreen from './screens/Password';
+import HomeScreen from './screens/Home';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Stack.Screen name="EmailScreen" component={EmailScreen}  options = {{headerShown:false}}/>
         <Stack.Screen name="SignupScreen" component={SignupScreen} options = {{headerShown:false}}/>
         <Stack.Screen name="PasswordScreen" component={PasswordScreen} options = {{headerShown:false}}/>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options = {{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

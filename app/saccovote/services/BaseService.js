@@ -1,4 +1,5 @@
 import { API_URL } from '@env';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default class BaseService {
@@ -16,10 +17,10 @@ export default class BaseService {
     }
 
     // Method to intercept requests and add Authorization token
-    #fetch(endpoint, options = {}, withToken = true) {
+    async #fetch(endpoint, options = {}, withToken = true) {
         const headers = new Headers(options.headers || {});
         if (withToken) {
-            const token = 'my_token'; // TODO: fetch this dynamically
+            const token = await AsyncStorage.getItem('token');
             headers.append('Authorization', `Token ${token}`);
         }
 
@@ -41,7 +42,7 @@ export default class BaseService {
 
     // Basic HTTP GET method
     get(endpoint, withToken = true) {
-        return this.#fetch(endpoint, withToken);
+        return this.#fetch(endpoint, {}, withToken);
     }
 
     // Basic HTTP POST method

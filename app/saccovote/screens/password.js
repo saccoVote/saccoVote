@@ -1,23 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { DataContext } from '../context/DataContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import authService from '../services/AuthService';
+
 
 const logo = require('../assets/images/logo2.png');
 
-const PasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('email@example.com');
+const PasswordScreen = ({ navigation, route }) => {
+  // const { data } = useContext(DataContext);
+  const [email, setEmail] = useState(
+        route.params?.email || ''
+    );
   const [password, setPassword] = useState('')
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [signingIn, setSigningIn] = useState(false)
 
-  const handleSignIn = () => {
+  const getEmail = async () => {
+	  const emailFromStorage = await AsyncStorage.getItem('email')
+	  if (!emailFromStorage) {
+		  navigation.navigate('EmailScreen')
+	  }
+	  setEmail(emailFromStorage)
+  }
 
-    // Validate the password
-    if (!validatePassword(password)) {
-      Alert.alert('Invalid Password', 'Please enter the correct password.');
-      return;
-    }
+  useEffect(() => {
+	getEmail()
+  }, [])
 
-    navigation.navigate('Dashboard');
+  const handleSignIn = async () => {
+    // sign in
+    setSigningIn(true)
+    const response = await authService.signin({email, password})
+    //if success, go to home, otherwise toast sign in failed 
+	if (response.ok) {
+		const token = (await response.json()).token
+		await AsyncStorage.setItem('token', token)
+		setSigningIn(false)
+		navigation.navigate('HomeScreen');
+	} else {
+		Alert.alert('Sign in failed', 'Please check you credentials.') // TODO:
+		setSigningIn(false)
+	}
+	return
   };
 
   const togglePasswordVisibility = () => {
@@ -56,7 +82,7 @@ const PasswordScreen = ({ navigation }) => {
           <Text style={Styles.forgotPassword}>Forgot password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={Styles.button} onPress={handleSignIn}>
+        <TouchableOpacity style={Styles.button} onPress={handleSignIn} disabled={signingIn}>
           <Text style={Styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
 
@@ -84,6 +110,7 @@ const Styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
+    marginBottom:20,
     width: 200,
     height: 200,
     resizeMode: 'contain',

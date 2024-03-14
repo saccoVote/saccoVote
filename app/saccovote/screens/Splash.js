@@ -1,18 +1,36 @@
-import React from 'react';
+import {useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logo = require('../assets/images/logo2.png');
 
+// AsyncStorage
+// web localstorage
+// androind keystore using rocksdb sqlite
+// ios keychain
+
 const SplashScreen = ({navigation}) => {
-    // TODO: check if token and navigate to home, otherwise navigate to email
+    const checkConfiguration = async () => {
+        if(await AsyncStorage.getItem('token')) {
+            navigation.navigate('HomeScreen')
+        }
+        else if(await AsyncStorage.getItem('email')) {
+            navigation.navigate('PasswordScreen')
+        }
+        else {
+            navigation.navigate('EmailScreen')
+        }
+        return
+    }
+    useEffect(() => {
+        checkConfiguration()
+    })
+
     return(
         <View style={styles.container}>
-            <TouchableOpacity  style={styles.container} onPress={() => {
-                navigation.navigate("EmailScreen")
-            }}>
+            <TouchableOpacity  style={styles.container} >
                 <Text style={styles.title}>Modernizing Sacco Voting Experience</Text>
-                <Image source={logo} style={styles.logo} />
-                
+                <Image source={logo} style={styles.logo} />                
             </TouchableOpacity>
         </View>
     );
