@@ -23,11 +23,12 @@ export default class BaseService {
             const token = await AsyncStorage.getItem('token');
             headers.append('Authorization', `Token ${token}`);
         }
-
+        
         return fetch(`${this.API_URL}${endpoint}`, {
             ...options,
             headers,
         });
+        
     }
 
     #getOptions(method, payload) {

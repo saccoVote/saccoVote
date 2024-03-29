@@ -1,47 +1,3 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
-import EmailScreen from './screens/Email';
-import SignupScreen from './screens/SignUp';
-import SplashScreen from './screens/Splash';
-import PasswordScreen from './screens/Password';
-import SaccoSwitcherScreen from './screens/SaccoSwitcher'
-import Tabs from './components/Tabs';
-import AdminDashboard from './Dashboard/AdminDashboard';
-import ManageSacco from './Dashboard/ManageSacco';
-
-
-const App = () => {
-
-  const Stack = createNativeStackNavigator();
-  
-  return (
-    <NavigationContainer>
-      <SafeAreaView style={{flex: 1}}>
-        <Stack.Navigator initialRouteName="SplashScreen">
-          <Stack.Screen name="SplashScreen" component = {SplashScreen} options={{headerShown:false}} />
-          <Stack.Screen name="EmailScreen" component={EmailScreen}  options = {{headerShown:false}}/>
-          <Stack.Screen name="SignupScreen" component={SignupScreen} options = {{headerShown:false}}/>
-          <Stack.Screen name="PasswordScreen" component={PasswordScreen} options = {{headerShown:false}}/>
-          <Stack.Screen name="SaccoSwitcherScreen" component={SaccoSwitcherScreen} options = {{headerShown:false}}/>
-          {/* <Stack.Screen name="TabScreen" component={TabScreen} options = {{headerShown:false}}/> */}
-          <Stack.Screen name="Tabs" component={Tabs} options = {{headerShown:false}}/>
-          <Stack.Screen name="AdminDashboard" component={AdminDashboard} options = {{headerShown:false}}/>
-          <Stack.Screen name="ManageSacco" component={ManageSacco} options = {{headerShown:false}}/>
-        </Stack.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
-  );
-};
-
-
-export default App;
-
-/* 
 import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -73,7 +29,7 @@ const screenOptions = {
     }
   }
 
-  const App = () => {
+  const AppNavigation = () => {
     // Define a new Stack for authentication screens
     function AuthStack() {
         return (
@@ -82,6 +38,7 @@ const screenOptions = {
                 <Stack.Screen name="EmailScreen" component={EmailScreen}  options={{headerShown: false}}/>
                 <Stack.Screen name="SignupScreen" component={SignupScreen} options={{headerShown: false}}/>
                 <Stack.Screen name="PasswordScreen" component={PasswordScreen} options={{headerShown: false}}/>
+                // Remove HomeScreen from here
             </Stack.Navigator>
         );
     }
@@ -173,4 +130,4 @@ const screenOptions = {
   )
 }
 
-export default App; */
+export default AppNavigation;

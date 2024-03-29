@@ -33,7 +33,7 @@ const EmailScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
-      <Text style={styles.title}>Vote</Text>
+      {/* <Text style={styles.title}>Vote</Text> */}
       <Text style={styles.subTitle}>Enter your email address to continue</Text>
       <TextInput
         style={styles.input}
@@ -42,7 +42,7 @@ const EmailScreen = ({ navigation }) => {
         keyboardType="email-address"
         onChangeText={setEmail}
       />
-      <TouchableOpacity onPress={handleContinue}  style={styles.button} disabled= {checkingUser}>
+      <TouchableOpacity onPress={handleContinue}  style={styles.button} /* disabled= {checkingUser} */>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
       <Text style={styles.terms}>Terms and conditions apply.</Text>

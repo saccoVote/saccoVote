@@ -38,7 +38,7 @@ const PasswordScreen = ({ navigation, route }) => {
 		const token = (await response.json()).token
 		await AsyncStorage.setItem('token', token)
 		setSigningIn(false)
-		navigation.navigate('HomeScreen');
+		navigation.navigate('SaccoSwitcherScreen');
 	} else {
 		Alert.alert('Sign in failed', 'Please check you credentials.') // TODO:
 		setSigningIn(false)
