@@ -4,3 +4,6 @@ from .custom_user_serializer import CustomUserSerializer
 from .group_serializer import GroupSerializer
 from .sacco_serializer import SaccoSerializer
 from .user_sacco_serializer import UserSaccoSerializer
+from .election_serializer import ElectionSerializer
+from .election_request_serializer import ElectionRequestSerializer
+from .election_response_serializer import ElectionResponseSerializer

@@ -10,5 +10,4 @@ class UserSaccoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSacco
-        fields = ['sacco_name', 'sacco_logo', 'role', 'created_at']
-        
+        fields = ['sacco_name', 'sacco_logo', 'role', 'created_at', 'is_vetter']

@@ -4,6 +4,9 @@ from base.models import CustomUser, Sacco, UserSacco
 
 
 class CreateUserSaccoSerializer(serializers.Serializer):
+    """
+    Serializer for creating new saccos and adding an admin user
+    """
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
     sacco_name = serializers.CharField(max_length=100)
