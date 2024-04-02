@@ -4,6 +4,8 @@ from base.models import SaccoUser
 
 
 class SaccoUserRequestSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source='user.email', read_only=True)
+
     class Meta:
         model = SaccoUser
-        fields = ['fullname', 'member_id', 'role', 'position', 'is_vetter', 'member_since']
+        fields = ['email', 'fullname', 'member_id', 'role', 'position', 'is_vetter', 'member_since']
