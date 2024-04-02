@@ -6,11 +6,18 @@ const AdminDashboard = ({ navigation }) => {
   const handleManageSaccoPress = () => {
       navigation.navigate('ManageSacco');
   }
+
+  const handleAddMemberPress = () => {
+    navigation.navigate('AddMember');
+  }
+  const handleViewMemberPress = () => {
+    navigation.navigate('ViewMember');
+  }
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <HeaderSection />
             <SaccoSection handleManageSaccoPress={handleManageSaccoPress} />
-            <MembersSection />
+            <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} />
             <ElectionsSection />
         </ScrollView>
     );
@@ -57,14 +64,14 @@ const SaccoSection = ({ handleManageSaccoPress }) => {
   );
 };
 
-const MembersSection = () => {
+const MembersSection = ({ handleAddMemberPress, handleViewMemberPress }) => {
   return (
     <View style={styles.membersContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress = {handleAddMemberPress}>
         <MaterialCommunityIcons name="account-plus-outline" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>Add new member</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress = {handleViewMemberPress}>
         <MaterialCommunityIcons name="account-multiple-outline" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>view members</Text>
       </TouchableOpacity>

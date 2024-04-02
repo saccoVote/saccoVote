@@ -18,6 +18,7 @@ export default class BaseService {
 
     // Method to intercept requests and add Authorization token
     async #fetch(endpoint, options = {}, withToken = true) {
+        console.log("Fetching...");
         const headers = new Headers(options.headers || {});
         if (withToken) {
             const token = await AsyncStorage.getItem('token');
@@ -28,7 +29,6 @@ export default class BaseService {
             ...options,
             headers,
         });
-        
     }
 
     #getOptions(method, payload) {

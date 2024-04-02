@@ -18,7 +18,9 @@
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.4",
-    "react-native-vector-icons": "^10.0.3"
+    "react-native-fingerprint-scanner": "^6.0.0",
+    "react-native-vector-icons": "^10.0.3",
+    "expo-local-authentication": "~13.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
