@@ -1,90 +1,216 @@
-import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+// the main screen after sign in
+import authService from '../services/AuthService';
+import { useEffect, useState } from 'react';
+import {StyleSheet, View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const logo = require('../assets/images/logo2.png');
 
-const HomeScreen = ({ navigation }) => {
-  const handleContinue = () => {
-    navigation.navigate('Signup');
-  };
+const recentElections = [
+    { id: '1', role: 'Chairperson', name: 'John Doe', image: require('../assets/images/profile.png') },
+    { id: '2', role: 'Treasurer', name: 'Jane Doe', image: require('../assets/images/profile.png') },
+    { id: '3', role: 'Treasurer', name: 'Jane Doe', image: require('../assets/images/profile.png') },
+    { id: '4', role: 'Treasurer', name: 'Jane Doe', image: require('../assets/images/profile.png') },
+    { id: '5', role: 'Treasurer', name: 'Jane Doe', image: require('../assets/images/profile.png') },
+  ];
+  
+  const upcomingElections = [
+    { id: '3', title: 'Secretary - Risk Management Committee', candidates: 5, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+    { id: '4', title: 'Supervisory Committee Member', candidates: 5, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+    
+  ];
+  
+  const ongoingElections = [
+    { id: '5', title: 'Credit Committee Internal Auditor', candidates: 4, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+    
 
-  return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
-      <Text style={styles.title}>Vote</Text>
-      <Text style={styles.subTitle}>Enter your email address to continue</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-      />
-      <TouchableOpacity onPress={handleContinue} style={styles.button}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-      <Text style={styles.terms}>Terms and conditions apply.</Text>
-    </View>
-  );
-};
+  ];
+const HomeScreen = () => {
+    // TODO: implement the actual home from figma. also make the bottom navigation as a component that will be reused across screens.
 
+
+    /* const [authUser, setAuthUser] = useState({})
+    const fetchAuthenticatedUser = async () => {
+        const response = await authService.getAuthenticatedUser()
+        if (response.ok) {
+            setAuthUser(await response.json())
+        }
+    }
+
+    useEffect(() => {
+        fetchAuthenticatedUser()
+    }, [])
+
+    
+
+
+    return (
+        <View style = {styles.container}>
+            <Text style = {styles.text}>HomeScreen</Text>
+            {authUser.email && 
+                <View>
+                    <Text>Welcome, {authUser.email}</Text> 
+                    <Text>User Saccos</Text>
+                    <Text>Sacco: {authUser['user_saccos'][0]['sacco_name']}</Text>
+                    <Text>Your role in this Sacco: {authUser['user_saccos'][0].role}</Text>
+                </View>
+            }
+        </View>
+
+    ); */
+
+    const renderElectionItem = ({ item, section }) => {
+        return (
+          <TouchableOpacity key={item.id} style={styles.electionItem} onPress={() => {/* Handle press event */ }}>
+            <View style={styles.electionInfo}>
+              {section !== 'recent' && (
+                <MaterialCommunityIcons name="vote" size={20} color="black" style={styles.voteIcon} />
+              )}
+              <View>
+                <Text style={styles.electionTitle}>{item.title || item.role}</Text>
+                {section !== 'recent' && (
+                  <Text style={styles.candidateText}>{item.candidates} candidates - {item.startDate} to {item.endDate}</Text>
+                )}
+              </View>
+            </View>
+            {/* {section === 'recent' && (
+              <MaterialCommunityIcons name={item.image} size={40} color="#FFC0CB" style={styles.profileIcon} />
+            )} */}
+          </TouchableOpacity>
+        );
+      };
+      return (
+        <View style={styles.container}>
+          <ScrollView style={styles.scrollViewContainer}>
+            <View style={styles.topBar}>
+              <TouchableOpacity style={styles.notificationIcon} onPress={() => {/* Handle notification press */ }}>
+                <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>Recent Elections</Text>
+              {/* Additional components */}
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
+              {recentElections.map((election) => (
+                <View key={election.id} style={styles.recentElectionCard}>
+                  <View style={styles.recentElectionTextContainer}>
+                    <Text style={styles.recentElectionRole}>{election.role}</Text>
+                    <Text style={styles.recentElectionName}>{election.name}</Text>
+                  </View>
+                  <Image source={election.image} style={styles.recentElectionAvatar} />
+                </View>
+              ))}
+            </ScrollView>
+            <Text style={styles.headerTitle}>Upcoming Elections (2)</Text>
+            {upcomingElections.map((item) => renderElectionItem({ item, section: 'upcoming' }))}
+    
+            <Text style={styles.headerTitle}>Ongoing Elections (1)</Text>
+            {ongoingElections.map((item) => renderElectionItem({ item, section: 'ongoing' }))}
+          </ScrollView> 
+        </View>
+    ); 
+    }; 
+    
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    alignItems: 'center',
-    padding: 20,
-  },
-  logo: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    marginTop: 40,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginTop: 100,
-  },
-  subTitle: {
-    fontSize: 16,
-    color: '#000000',
-    marginTop: 30,
-    marginBottom: 30,
-  },
-  input: {
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 5,
-    width: '100%',
-    fontSize: 16,
-    padding: 10,
-    marginBottom: 30,
-  },
-  button: {
-    backgroundColor: '#34C759',
-    height: 50,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 25,
-    padding: 10,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  terms: {
-    fontSize: 12,
-    color: '#000000',
-    position: 'absolute',
-    bottom: 10,
-    alignSelf: 'center',
-  },
-});
+    scrollViewContainer: {
+        flex: 1,
+      },
+      container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: 'white',
+      },
+      header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 8,
+      },
+      headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+      },
+      electionItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 10,
+        //backgroundColor: '#1999f9',
+        borderRadius: 5,
+        marginBottom: 10,
+        marginTop: 10,
+      },
+      electionInfo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      voteIcon: {
+        marginRight: 10,
+      },
+      electionTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      candidateText: {
+        fontSize: 14,
+      },
+      tabBar: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderColor: '#ddd',
+        backgroundColor: 'white',
+      },
+      tabItem: {
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      horizontalScroll: {
+        paddingBottom: 16,
+      },
+      recentElectionRole: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 8,
+        textAlign: 'center',
+      },
+      recentElectionName: {
+        fontSize: 12,
+        textAlign: 'center',
+      },
+      recentElectionCard: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        //TODO:to change the background color
+        backgroundColor: '#34C759', 
+        borderRadius: 10, 
+        padding: 10,
+        marginHorizontal: 8,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+      },
+      recentElectionTextContainer: {
+        flex: 1, 
+      },
+      recentElectionAvatar: {
+        marginLeft: 16, 
+        width: 50, 
+        height: 50, 
+        borderRadius: 25, 
+      },
+      topBar: {
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        padding: 10,
+      },
+}) 
 
 
 export default HomeScreen;
