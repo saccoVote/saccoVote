@@ -1,18 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
+import AdminDashboard from '../Dashboard/AdminDashboard';
+
 
 const DashboardTab = ({ navigation }) => {
-  const handleAdminDashboardPress = () => {
-    navigation.navigate('AdminDashboard');
-  };
 
+// TODO: if user admin render admin dashboard otherwise user dashboard
   return (
-    <View>
-      <Text>Dashboard</Text>
-      <TouchableOpacity onPress={handleAdminDashboardPress}>
-        <Text style={styles.button}>AdminDashboard</Text>
-      </TouchableOpacity>
-    </View>
+    <AdminDashboard/>
   );
 };
 
