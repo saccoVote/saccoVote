@@ -2,12 +2,14 @@ asgiref==3.7.2
 certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
+Command==0.1.0
 cryptography==42.0.5
 defusedxml==0.7.1
 Django==5.0.1
 django-allauth==0.61.1
 django-rest-auth==0.9.5
 djangorestframework==3.14.0
+drf-nested-routers==0.93.5
 drf-yasg==1.21.7
 idna==3.6
 inflection==0.5.1

@@ -17,6 +17,11 @@ import UpcomingElectionScreen from './screens/UpcomingElection';
 import OngoingElectionScreen from './screens/OngoingElection';
 import ElectionCurrentScreen from './screens/ElectionCurrent';
 import NewElectionScreen from './screens/NewElection';
+import AddMember from './Dashboard/AddMember';
+import ViewMember from './Dashboard/ViewMember';
+import ProfileManagement from './tabs/ProfileManagement';
+import FingerPrint from './tabs/FingerPrint';
+
 
 const App = () => {
 
@@ -39,6 +44,11 @@ const App = () => {
           <Stack.Screen name="OngoingElection" component={OngoingElectionScreen} options={{headerShown:false}} />
           <Stack.Screen name="ElectionCurrent" component={ElectionCurrentScreen} options={{headerShown:false}} />
           <Stack.Screen name="NewElection" component={NewElectionScreen} options={{headerShown:false}} />
+          <Stack.Screen name="AddMember" component={AddMember} options = {{headerShown:false}}/>
+          <Stack.Screen name="ViewMember" component={ViewMember} options = {{headerShown:false}}/>
+          <Stack.Screen name="ProfileManagement" component={ProfileManagement} options = {{headerShown:false}}/>
+          <Stack.Screen name="FingerPrint" component={FingerPrint} options = {{headerShown:false}}/>
+          
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>

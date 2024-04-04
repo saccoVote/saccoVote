@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, SafeAreaView} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -15,21 +15,22 @@ const SaccoSwitcherScreen = ({ navigation }) => {
     navigation.navigate('Tabs');
   };
 
-  const renderSacco = ({ item }) => (
-    <TouchableOpacity key={item.id} style={styles.saccoButton}
-onPress={() => handleSelectSacco(item.id)} >
-  <Text style={styles.saccoButtonText}>{item.name}</Text>
+  const renderSacco = ({ sacco }) => (
+    <TouchableOpacity key={sacco.id} style={styles.saccoButton}
+onPress={() => handleSelectSacco(sacco.id)} >
+  <Text style={styles.saccoButtonText}>{sacco.name}</Text>
 </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Sacco</Text>
-      <FlatList
+      {/* <FlatList
       data={saccos}
       renderItem={renderSacco}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.listcontainer} />
+      contentContainerStyle={styles.listcontainer} /> */}
+      {saccos.map(sacco=>renderSacco({sacco}))}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,68 +12,77 @@ const MoreTab = ({ navigation }) => {
       routes: [{ name: 'SplashScreen' }],
     });
   };
+  const handleManageSaccoPress = () => {
+    navigation.navigate('ManageSacco');
+  }
+
+  const handleProfileManagementPress = () => {
+    navigation.navigate('ProfileManagement');
+  }
+
+  const handleBiometricAuthenticationPress = () => {
+    navigation.navigate('FingerPrint');
+  }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
-              <TouchableOpacity style={styles.notificationIcon} onPress={() => {/* Handle notification press */ }}>
-                <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
-              </TouchableOpacity>
-            </View>
+        <TouchableOpacity style={styles.notificationIcon} onPress={() => {/* Handle notification press */ }}>
+          <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.header}>
         <Icon name="account-circle" size={50} color="#444" />
         <Text style={styles.headerText}>John Doe, Admin</Text>
         <Text style={styles.subHeaderText}>Chairman at Mapambo Sacco</Text>
       </View>
-      <View style = {styles.container2}>
-      <TouchableOpacity style={styles.menuItem}>
-        <Icon name="account-settings" size={20} color="#444" />
-        <Text style={styles.menuItemText}>Profile Management</Text>
-      </TouchableOpacity>
+      <View style={styles.container2}>
+        <TouchableOpacity style={styles.menuItem} onPress={handleProfileManagementPress}>
+          <Icon name="account-settings" size={20} color="#444" />
+          <Text style={styles.menuItemText}>Profile Management</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Icon name="bank" size={20} color="#444" />
-        <Text style={styles.menuItemText}>Sacco Management</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={handleManageSaccoPress}>
+          <Icon name="bank" size={20} color="#444" />
+          <Text style={styles.menuItemText}>Sacco Management</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Icon name="fingerprint" size={20} color="#444" />
-        <Text style={styles.menuItemText}>Enable Biometrics</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress = {handleBiometricAuthenticationPress}>
+          <Icon name="fingerprint" size={20} color="#444" />
+          <Text style={styles.menuItemText}>Enable Biometrics</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SaccoSwitcherScreen')}>
-        <Icon name="swap-horizontal" size={20} color="#444" />
-        <Text style={styles.menuItemText}>Switch Sacco</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SaccoSwitcherScreen')}>
+          <Icon name="swap-horizontal" size={20} color="#444" />
+          <Text style={styles.menuItemText}>Switch Sacco</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Icon name="information-outline" size={20} color="#444" />
-        <Text style={styles.menuItemText}>App Version v1.0</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Icon name="information-outline" size={20} color="#444" />
+          <Text style={styles.menuItemText}>App Version v1.0</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={handleSignout}>
-        <Icon name="exit-to-app" size={20} color="#444" />
-        <Text style={styles.menuItemText}>Sign Out</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={handleSignout}>
+          <Icon name="exit-to-app" size={20} color="#444" />
+          <Text style={styles.menuItemText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
+    paddingBottom: 20, // Adjust if necessary
   },
   container2: {
     marginTop: 30,
-    alignItems: 'left',
-    justifyContent: 'left',
   },
   header: {
     alignItems: 'center',
-    padding: 80,
-
+    padding: 20,
   },
   headerText: {
     fontSize: 22,
@@ -94,7 +103,6 @@ const styles = StyleSheet.create({
   menuItemText: {
     fontSize: 16,
     marginLeft: 20,
-    
   },
   topBar: {
     justifyContent: 'space-between',
