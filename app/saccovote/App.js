@@ -13,9 +13,8 @@ import SaccoSwitcherScreen from './screens/SaccoSwitcher'
 import Tabs from './components/Tabs';
 import AdminDashboard from './Dashboard/AdminDashboard';
 import ManageSacco from './Dashboard/ManageSacco';
-import UpcomingElectionScreen from './screens/UpcomingElection';
-import OngoingElectionScreen from './screens/OngoingElection';
-import ElectionCurrentScreen from './screens/ElectionCurrent';
+
+
 import NewElectionScreen from './screens/NewElection';
 import AddMember from './Dashboard/AddMember';
 import ViewMember from './Dashboard/ViewMember';
@@ -40,9 +39,6 @@ const App = () => {
           <Stack.Screen name="Tabs" component={Tabs} options = {{headerShown:false}}/>
           {/* <Stack.Screen name="AdminDashboard" component={AdminDashboard} options = {{headerShown:false}}/> */}
           <Stack.Screen name="ManageSacco" component={ManageSacco} options = {{headerShown:false}}/>
-          <Stack.Screen name="UpcomingElection" component={UpcomingElectionScreen} options={{headerShown:false}}/>
-          <Stack.Screen name="OngoingElection" component={OngoingElectionScreen} options={{headerShown:false}} />
-          <Stack.Screen name="ElectionCurrent" component={ElectionCurrentScreen} options={{headerShown:false}} />
           <Stack.Screen name="NewElection" component={NewElectionScreen} options={{headerShown:false}} />
           <Stack.Screen name="AddMember" component={AddMember} options = {{headerShown:false}}/>
           <Stack.Screen name="ViewMember" component={ViewMember} options = {{headerShown:false}}/>

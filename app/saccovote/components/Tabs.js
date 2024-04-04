@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import HomeScreen from '../screens/Home';
 import DashboardTab from '../tabs/Dashboard';
-import ElectionCurrentTab from '../tabs/ElectionCurrent';
+import ElectionCurrentAndUpcomingTab from '../tabs/ElectionCurrentAndUpcoming';
 import HistoryScreen from '../screens/History';
 import MoreTab from '../tabs/More';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -71,8 +71,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="ElectionCurrent"
-        component={ElectionCurrentTab}
+        name="ElectionCurrentAndUpcomingTab"
+        component={ElectionCurrentAndUpcomingTab}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

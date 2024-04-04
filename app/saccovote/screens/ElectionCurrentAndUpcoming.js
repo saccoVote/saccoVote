@@ -5,20 +5,24 @@ const electionsData = [
   { id: '1', status: 'ongoing', startDate: '3rd Jan, 2024', endDate: '7th Feb, 2024' },
   { id: '2', status: 'ongoing', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
   { id: '3', status: 'soon', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
-  // ... add more elections as needed
+  { id: '4', status: 'soon', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
 ];
 
-const ElectionCurrentScreen = () => {
+const ElectionCurrentAndUpcomingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Elections | Upcoming & Ongoing</Text>
       {electionsData.map((election, index) => (
-        <View key={index} style={styles.electionItem}>
-          <Text style={styles.position}>Secretary - Risk Management Committee</Text>
-          <Text style={styles.candidatesCount}>5 candidates</Text>
-          <Text style={styles.status(election.status)}>{election.status}</Text>
-          <Text style={styles.dates}>Starts on {election.startDate} until {election.endDate}</Text>
-        </View>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate("ElectionCurrentAndUpcomingTab",{screen:"OngoingElectionScreen"})
+        }}>
+          <View key={election.id} style={styles.electionItem}>
+            <Text style={styles.position}>Secretary - Risk Management Committee</Text>
+            <Text style={styles.candidatesCount}>5 candidates</Text>
+            <Text style={styles.status(election.status)}>{election.status}</Text>
+            <Text style={styles.dates}>Starts on {election.startDate} until {election.endDate}</Text>
+          </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -55,10 +59,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: status === 'ongoing' ? 'green' : 'grey',
     fontWeight: 'bold',
+    textAlign: 'right',
   }),
   dates: {
     fontSize: 14,
   },
 });
 
-export default ElectionCurrentScreen;
+export default ElectionCurrentAndUpcomingScreen;
