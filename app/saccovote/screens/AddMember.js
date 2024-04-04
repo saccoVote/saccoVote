@@ -13,6 +13,7 @@ const AddMemberScreen = () => {
   const dummyPosition = "member";
   const dummyMemberId = "M18JH";
 
+  
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>

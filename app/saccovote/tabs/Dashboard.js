@@ -11,6 +11,7 @@ const DashboardTab = ({ navigation }) => {
 
   const Stack = createNativeStackNavigator();
 
+// TODO: if user admin render admin dashboard otherwise user dashboard
   return (
     <Stack.Navigator initialRouteName="DashboardScreen">
       <Stack.Screen name="DashboardScreen" component={Dashboard} options = {{headerShown:false}}/>

@@ -14,6 +14,7 @@ import Tabs from './components/Tabs';
 import ProfileManagement from './tabs/ProfileManagement';
 import FingerPrint from './tabs/FingerPrint';
 
+
 const App = () => {
 
   const Stack = createNativeStackNavigator();
