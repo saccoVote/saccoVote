@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import authService from '../services/AuthService';
 
 
-const ManageSacco = () => {
+const ManageSaccoScreen = () => {
   const [name, setName] = useState('Mapambo');
   const [logo, setLogo] = useState('');
   const [save, setSave] = useState('');
@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ManageSacco;
+export default ManageSaccoScreen;

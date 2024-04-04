@@ -11,10 +11,6 @@ import SplashScreen from './screens/Splash';
 import PasswordScreen from './screens/Password';
 import SaccoSwitcherScreen from './screens/SaccoSwitcher'
 import Tabs from './components/Tabs';
-import AdminDashboard from './Dashboard/AdminDashboard';
-import ManageSacco from './Dashboard/ManageSacco';
-import AddMember from './Dashboard/AddMember';
-import ViewMember from './Dashboard/ViewMember';
 import ProfileManagement from './tabs/ProfileManagement';
 import FingerPrint from './tabs/FingerPrint';
 
@@ -31,12 +27,10 @@ const App = () => {
           <Stack.Screen name="SignupScreen" component={SignupScreen} options = {{headerShown:false}}/>
           <Stack.Screen name="PasswordScreen" component={PasswordScreen} options = {{headerShown:false}}/>
           <Stack.Screen name="SaccoSwitcherScreen" component={SaccoSwitcherScreen} options = {{headerShown:false}}/>
-          {/* <Stack.Screen name="TabScreen" component={TabScreen} options = {{headerShown:false}}/> */}
+
           <Stack.Screen name="Tabs" component={Tabs} options = {{headerShown:false}}/>
-          <Stack.Screen name="AdminDashboard" component={AdminDashboard} options = {{headerShown:false}}/>
-          <Stack.Screen name="ManageSacco" component={ManageSacco} options = {{headerShown:false}}/>
-          <Stack.Screen name="AddMember" component={AddMember} options = {{headerShown:false}}/>
-          <Stack.Screen name="ViewMember" component={ViewMember} options = {{headerShown:false}}/>
+          
+
           <Stack.Screen name="ProfileManagement" component={ProfileManagement} options = {{headerShown:false}}/>
           <Stack.Screen name="FingerPrint" component={FingerPrint} options = {{headerShown:false}}/>
           

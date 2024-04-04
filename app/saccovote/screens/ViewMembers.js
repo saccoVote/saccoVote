@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, ScrollView, RefreshControl } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ViewMember = () => {
+const ViewMembersScreen = () => {
   const [members, setMembers] = useState([
     { id: 1, name: 'Alessandro Koome', avatar: require('../assets/images/profile.png') },
     { id: 2, name: 'EveCandy Mwende', avatar: require('../assets/images/profile.png') },
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewMember;
+export default ViewMembersScreen;

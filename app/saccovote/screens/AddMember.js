@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 
-const AddMember = () => {
+const AddMemberScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [position, setPosition] = useState('');
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddMember;
+export default AddMemberScreen;

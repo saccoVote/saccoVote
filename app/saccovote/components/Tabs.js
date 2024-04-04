@@ -23,7 +23,7 @@ const screenOptions = {
   },
   tabBarActiveBackgroundColor: '#5FD25F'
 }
-const Tabs = () => {
+const Tabs = ({navigation}) => {
   return (
       <Tab.Navigator screenOptions={screenOptions} initialRouteName='HomeScreen' >
         <Tab.Screen 
@@ -42,7 +42,7 @@ const Tabs = () => {
         />
         <Tab.Screen 
       //Both admin and normal user dahsboard
-        name="Dashboard" 
+        name="DashboardTab" 
         component={DashboardTab} 
         options={{
           tabBarIcon: ({focused})=>{

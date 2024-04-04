@@ -3,13 +3,14 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default class BaseService {
-    static #instance;
-    
+    static instances = {};
+
     constructor() {
-        if (!BaseService.#instance) {
-            BaseService.#instance = this;
+        const className = this.constructor.name;
+        if (!BaseService.instances[className]) {
+            BaseService.instances[className] = this;
         }
-        return BaseService.#instance;
+        return BaseService.instances[className];
     }
 
     get API_URL() {
@@ -18,7 +19,7 @@ export default class BaseService {
 
     // Method to intercept requests and add Authorization token
     async #fetch(endpoint, options = {}, withToken = true) {
-        console.log("Fetching...");
+        console.log("Fetching....");
         const headers = new Headers(options.headers || {});
         if (withToken) {
             const token = await AsyncStorage.getItem('token');
@@ -29,6 +30,8 @@ export default class BaseService {
             ...options,
             headers,
         });
+        
+        
     }
 
     #getOptions(method, payload) {

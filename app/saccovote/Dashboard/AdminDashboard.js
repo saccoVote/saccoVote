@@ -1,17 +1,23 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
-const AdminDashboard = ({ navigation }) => {
+
+const AdminDashboard = () => {
+  const navigation = useNavigation()
+
   const handleManageSaccoPress = () => {
-      navigation.navigate('ManageSacco');
+      navigation.navigate('ManageSaccoScreen');
   }
 
   const handleAddMemberPress = () => {
-    navigation.navigate('AddMember');
+    // 3 nested step navigation. use for reference if needed
+    // navigation.navigate('Tabs', {screen: "DashboardTab", params: {screen: "AddMemberScreen"}});
+    navigation.navigate("AddMemberScreen")
   }
   const handleViewMemberPress = () => {
-    navigation.navigate('ViewMember');
+    navigation.navigate('ViewMembersScreen');
   }
     return (
         <ScrollView contentContainerStyle={styles.container}>
