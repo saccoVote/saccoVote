@@ -1,7 +1,6 @@
 from rest_framework.permissions import BasePermission
 
 from base.models import SaccoUser
-from base.views.sacco_view_set import SaccoViewSet
 
 
 class IsSuperUser(BasePermission):
@@ -14,7 +13,7 @@ class IsSaccoAdmin(BasePermission):
     Custom permission to only allow sacco admins to perform certain actions
     """
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('id') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
         return SaccoUser.objects.filter(sacco_id=sacco_id, role='admin',
                                         user=request.user).exists()
 
@@ -25,7 +24,7 @@ class IsSaccoMember(BasePermission):
     """
 
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('id') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, role__in=['member', 'staff', 'admin'], user=request.user).exists()
 
@@ -35,14 +34,14 @@ class IsSaccoMemberOnly(BasePermission):
         Custom permission to only allow sacco members to perform certain actions
     """
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('id') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, role='member', user=request.user).exists()
 
 
 class IsSaccoVetter(BasePermission):
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('id') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, is_vetter=True, user=request.user).exists()
 
