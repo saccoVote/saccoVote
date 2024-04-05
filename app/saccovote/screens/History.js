@@ -13,8 +13,8 @@ const HistoryScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Elections | History</Text>
-      {roles.map((election) => (
-        <View key={election.id} style={styles.recentElectionCard}>
+      {roles.map((election, index) => (
+        <View key={index} style={styles.recentElectionCard}>
           <View style={styles.recentElectionTextContainer}>
             <Text style={styles.recentElectionRole}>{election.title}</Text>
             <Text style={styles.recentElectionName}>{election.name}</Text>
@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 8,
-    textAlign: 'end',
+    textAlign: 'left',
   },
   recentElectionName: {
     fontSize: 15,
-    textAlign: 'end',
+    textAlign: 'left',
   },
   recentElectionCard: {
     flexDirection: 'row',

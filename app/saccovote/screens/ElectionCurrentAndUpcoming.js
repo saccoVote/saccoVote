@@ -13,10 +13,10 @@ const ElectionCurrentAndUpcomingScreen = ({navigation}) => {
     <View style={styles.container}>
       <Text style={styles.header}>Elections | Upcoming & Ongoing</Text>
       {electionsData.map((election, index) => (
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity key={election.id} onPress={() => {
           navigation.navigate("ElectionCurrentAndUpcomingTab",{screen:"OngoingElectionScreen"})
         }}>
-          <View key={election.id} style={styles.electionItem}>
+          <View  style={styles.electionItem}>
             <Text style={styles.position}>Secretary - Risk Management Committee</Text>
             <Text style={styles.candidatesCount}>5 candidates</Text>
             <Text style={styles.status(election.status)}>{election.status}</Text>

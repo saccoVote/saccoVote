@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 8,
-    textAlign: 'end',
+    textAlign: 'left',
   },
   recentElectionName: {
     fontSize: 15,
-    textAlign: 'end',
+    textAlign: 'left',
   },
   recentElectionCard: {
     flexDirection: 'row',
