@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useNavigation } from '@react-navigation/native';
 
 
-const AdminDashboard = () => {
+const AdminDashboard = ({selectedSacco}) => {
   const navigation = useNavigation()
 
   const handleManageSaccoPress = () => {
@@ -22,8 +22,8 @@ const AdminDashboard = () => {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <HeaderSection />
-            <SaccoSection handleManageSaccoPress={handleManageSaccoPress} />
-            <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} />
+            <SaccoSection handleManageSaccoPress={handleManageSaccoPress} selectedSacco={selectedSacco}/>
+            <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} selectedSacco={selectedSacco} />
             <ElectionsSection />
         </ScrollView>
     );
@@ -32,19 +32,19 @@ const AdminDashboard = () => {
 
 
 
-const HeaderSection = () => {
+const HeaderSection = ({selectedSacco}) => {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.topBar}>
         <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
       </View>
       <Text style={styles.headerText}>Welcome Back, Doe</Text>
-      <Text style={styles.subHeaderText}>Manage your sacco lorem ipsum lorem</Text>
+      <Text style={styles.subHeaderText}>Manage your sacco {selectedSacco?.sacco_name}</Text>
     </View>
   );
 };
 
-const SaccoSection = ({ handleManageSaccoPress }) => {
+const SaccoSection = ({ handleManageSaccoPress, selectedSacco }) => {
   return (
       <View style={styles.saccoContainer}>
         {/* <View style = {styles.container2}>
@@ -52,7 +52,7 @@ const SaccoSection = ({ handleManageSaccoPress }) => {
         </View> */}
           <View>
               <Text style={styles.sectionTitle}>Sacco</Text>
-              <Text style={styles.saccoName}>Mapambo Sacco</Text>
+              <Text style={styles.saccoName}>{selectedSacco?.sacco_name}</Text>
           </View>
           <View>
               <Text>members</Text>
