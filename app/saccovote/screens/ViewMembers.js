@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import {useFocusEffect} from '@react-navigation/native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, ScrollView, RefreshControl } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import saccoUserService from '../services/SaccoUserService';
 
-const ViewMembersScreen = () => {
-  const [members, setMembers] = useState([
-    { id: 1, name: 'Alessandro Koome', avatar: require('../assets/images/profile.png') },
-    { id: 2, name: 'EveCandy Mwende', avatar: require('../assets/images/profile.png') },
-    { id: 3, name: 'Evalyne Mbogo', avatar: require('../assets/images/profile.png') },
-    { id: 4, name: 'Shallom Nyawira', avatar: require('../assets/images/profile.png') },
-  ]);
 
+
+const avatar = require('../assets/images/profile.png')
+
+const ViewMembersScreen = ({ navigation }) => {
+  const [members, setMembers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefreshing(true);
-    // Perform data fetching or any other asynchronous tasks here
-    setTimeout(() => {
-      // Update the members or perform any other actions after data fetching
+    try {
+      const response = await saccoUserService.getUsers()
+      if (!response.ok) {
+        setRefreshing(false);
+        Alert.alert('An error occured while fetching users')
+      }
+      else {
+        setRefreshing(false)
+        setMembers((await response.json()).results)
+      }
+    } catch (error) {
       setRefreshing(false);
-    }, 1000); // Simulating a delay of 1 second
+      Alert.alert('An error occured')
+      console.debug(error)
+    }
   };
+
+
+  useFocusEffect(React.useCallback(() => {
+    handleRefresh()
+  }, []))
+
 
   const handleDeleteMember = (id, name) => {
     Alert.alert(
@@ -32,6 +48,11 @@ const ViewMembersScreen = () => {
       { cancelable: false }
     );
   };
+
+  const handleEditMemberPress = (id) => {
+    console.debug('edit member btn clicked', id);
+    navigation.navigate('EditMemberScreen', { id })
+  }
 
   const confirmDelete = (id) => {
     const updatedMembers = members.filter(member => member.id !== id);
@@ -54,11 +75,18 @@ const ViewMembersScreen = () => {
             <Text style={styles.heading2}>Members</Text>
             {members.map((member) => (
               <View key={member.id} style={styles.memberItem}>
-                <Image source={member.avatar} style={styles.avatar} />
-                <Text style={styles.memberName}>{member.name}</Text>
-                <TouchableOpacity onPress={() => handleDeleteMember(member.id, member.name)} style={styles.deleteButton}>
-                  <Text style={styles.deleteButtonText}>Delete</Text>
-                </TouchableOpacity>
+                <View style={styles.memberItemInfo}>
+                  <Image source={avatar} style={styles.avatar} />
+                  <Text style={styles.memberName}>{member.fullname}</Text>
+                </View>
+                <View style={styles.actionsContainer}>
+                  <TouchableOpacity onPress={() => handleDeleteMember(member.id, member.fullname)} style={styles.deleteButton}>
+                    <Text style={styles.deleteButtonText}>Delete</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleEditMemberPress(member.id)} style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ))}
           </View>
@@ -89,7 +117,12 @@ const styles = StyleSheet.create({
   memberItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 10,
+  },
+  memberItemInfo: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   avatar: {
     width: 50,
@@ -101,9 +134,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   deleteButton: {
-    borderWidth: 1,
-    borderColor: 'red',
-    borderRadius: 5,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    // borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginLeft: 'auto',
@@ -112,6 +145,22 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
   },
+  editButton: {
+    borderWidth: 1,
+    borderColor: 'blue',
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    marginLeft: 'auto',
+  },
+  editButtonText: {
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+  actionsContainer: {
+    flexDirection: 'row',
+    gap: 10
+  }
 });
 
 export default ViewMembersScreen;

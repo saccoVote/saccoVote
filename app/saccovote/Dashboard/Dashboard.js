@@ -24,7 +24,7 @@ const Dashboard = ({navigation}) => {
 
     //TODO: later handle staff role
     return selectedSacco && selectedSacco.role == 'admin'
-        ? <AdminDashboard/>
+        ? <AdminDashboard selectedSacco={selectedSacco}/>
             : selectedSacco && selectedSacco.role == 'member' 
                 ? <MemberDashboard/>
                 : null
