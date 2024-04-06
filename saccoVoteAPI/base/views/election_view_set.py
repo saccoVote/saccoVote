@@ -40,11 +40,11 @@ class ElectionViewSet(viewsets.ModelViewSet):
 
     def delete(self, request, *args, **kwargs):
         election = Election.objects.filter(
-            sacco=self.kwargs['sacco_pk'], id=self.kwargs['id'])
+            sacco=self.kwargs['sacco_pk'], id=self.kwargs['pk'])
         if election:
             election.delete()
             # TODO: send an email - delete activity
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(
-            {'message': 'Election with id {id} was not found'.format(id=self.kwargs['id'])},
+            {'message': 'Election with id {id} was not found'.format(id=self.kwargs['pk'])},
             status=status.HTTP_404_NOT_FOUND)

@@ -12,8 +12,9 @@ class IsSaccoAdmin(BasePermission):
     """
     Custom permission to only allow sacco admins to perform certain actions
     """
+
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('sacco_pk') or view.kwargs.get('pk')
         return SaccoUser.objects.filter(sacco_id=sacco_id, role='admin',
                                         user=request.user).exists()
 
@@ -24,7 +25,7 @@ class IsSaccoMember(BasePermission):
     """
 
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('sacco_pk') or view.kwargs.get('pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, role__in=['member', 'staff', 'admin'], user=request.user).exists()
 
@@ -33,15 +34,16 @@ class IsSaccoMemberOnly(BasePermission):
     """
         Custom permission to only allow sacco members to perform certain actions
     """
+
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('sacco_pk') or view.kwargs.get('pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, role='member', user=request.user).exists()
 
 
 class IsSaccoVetter(BasePermission):
     def has_permission(self, request, view):
-        sacco_id = view.kwargs.get('pk') or view.kwargs.get('sacco_pk')
+        sacco_id = view.kwargs.get('sacco_pk') or view.kwargs.get('pk')
         return SaccoUser.objects.filter(
             sacco_id=sacco_id, is_vetter=True, user=request.user).exists()
 
@@ -72,6 +74,6 @@ class CanVote(BasePermission):
         3. user is not a vetter of the election
         4. user hasn't voted in this election
     """
+
     def has_permission(self, request, view):
         return NotImplementedError
-

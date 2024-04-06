@@ -47,7 +47,7 @@ class SaccoUserViewSet(viewsets.ModelViewSet):
                 email=self.request.data['email'],
                 password=password,
             )
-            
+
         request.data['sacco'] = self.kwargs['sacco_pk']
         request.data['user'] = user.id
         serializer = SaccoUserSerializer(data=request.data)
@@ -56,24 +56,28 @@ class SaccoUserViewSet(viewsets.ModelViewSet):
                 serializer.save()
             except IntegrityError:
                 return Response({'error': 'Sacco User already exists'}, status=status.HTTP_409_CONFLICT)
-            send_email("You've been added to {sacco_name} in saccoVote"
-                       .format(sacco_name=Sacco.objects.filter(id=serializer.data.get('sacco')).first().name), [request.data.get('email')], 'new-sacco-member',
-                       context={
-                           'sacco_name': Sacco.objects.filter(id=serializer.data.get('sacco')).first().name,
-                           'email': request.data.get('email'),
-                           'fullname': request.data.get('fullname'),
-                           'password': password
-                       })
+            send_email(
+                "You've been added as {role} of {sacco_name} in saccoVote"
+                .format(
+                    role='an admin' if request.data.get('role') == 'admin' else 'a '+request.data.get('role'),
+                    sacco_name=Sacco.objects.filter(id=serializer.data.get('sacco')).first().name),
+                [request.data.get('email')], 'new-sacco-member',
+                context={
+                    'sacco_name': Sacco.objects.filter(id=serializer.data.get('sacco')).first().name,
+                    'email': request.data.get('email'),
+                    'fullname': request.data.get('fullname'),
+                    'password': password
+                })
             return Response({'message': 'Member added', 'id': user.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
-        saccoUser = SaccoUser.objects.filter(
-            sacco=self.kwargs['sacco_pk'], id=self.kwargs['id'])
-        if saccoUser:
-            saccoUser.delete()
+        sacco_user = SaccoUser.objects.filter(
+            sacco=self.kwargs['sacco_pk'], id=self.kwargs['pk'])
+        if sacco_user:
+            sacco_user.delete()
             # TODO: send an email - delete activity
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(
-            {'message': 'Member with id {id} was not found'.format(id=self.kwargs['id'])},
+            {'message': 'Member with id {id} was not found'.format(id=self.kwargs['pk'])},
             status=status.HTTP_404_NOT_FOUND)
