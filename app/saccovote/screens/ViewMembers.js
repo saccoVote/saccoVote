@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import {useFocusEffect} from '@react-navigation/native';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, ScrollView, RefreshControl } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import {
+  View, Text, StyleSheet, Image, TouchableOpacity, Alert, ScrollView, RefreshControl
+} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import saccoUserService from '../services/SaccoUserService';
 
-
-
-const avatar = require('../assets/images/profile.png')
+const avatar = require('../assets/images/profile.png');
 
 const ViewMembersScreen = ({ navigation }) => {
   const [members, setMembers] = useState([]);
@@ -15,27 +15,24 @@ const ViewMembersScreen = ({ navigation }) => {
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
-      const response = await saccoUserService.getUsers()
+      const response = await saccoUserService.getUsers();
       if (!response.ok) {
         setRefreshing(false);
-        Alert.alert('An error occured while fetching users')
-      }
-      else {
-        setRefreshing(false)
-        setMembers((await response.json()).results)
+        Alert.alert('An error occurred while fetching users');
+      } else {
+        setRefreshing(false);
+        setMembers((await response.json()).results);
       }
     } catch (error) {
       setRefreshing(false);
-      Alert.alert('An error occured')
-      console.debug(error)
+      Alert.alert('An error occurred');
+      console.debug(error);
     }
   };
 
-
   useFocusEffect(React.useCallback(() => {
-    handleRefresh()
-  }, []))
-
+    handleRefresh();
+  }, []));
 
   const handleDeleteMember = (id, name) => {
     Alert.alert(
@@ -51,8 +48,8 @@ const ViewMembersScreen = ({ navigation }) => {
 
   const handleEditMemberPress = (id) => {
     console.debug('edit member btn clicked', id);
-    navigation.navigate('EditMemberScreen', { id })
-  }
+    navigation.navigate('EditMemberScreen', { id });
+  };
 
   const confirmDelete = (id) => {
     const updatedMembers = members.filter(member => member.id !== id);
@@ -70,26 +67,24 @@ const ViewMembersScreen = ({ navigation }) => {
         <View style={styles.topBar}>
           <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
         </View>
-        <View>
-          <View style={styles.membersContainer}>
-            <Text style={styles.heading2}>Members</Text>
-            {members.map((member) => (
-              <View key={member.id} style={styles.memberItem}>
-                <View style={styles.memberItemInfo}>
-                  <Image source={avatar} style={styles.avatar} />
-                  <Text style={styles.memberName}>{member.fullname}</Text>
-                </View>
-                <View style={styles.actionsContainer}>
-                  <TouchableOpacity onPress={() => handleDeleteMember(member.id, member.fullname)} style={styles.deleteButton}>
-                    <Text style={styles.deleteButtonText}>Delete</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleEditMemberPress(member.id)} style={styles.editButton}>
-                    <Text style={styles.editButtonText}>Edit</Text>
-                  </TouchableOpacity>
-                </View>
+        <View style={styles.membersContainer}>
+          <Text style={styles.heading2}>Members</Text>
+          {members.map((member) => (
+            <View key={member.id} style={styles.memberItem}>
+              <View style={styles.memberItemInfo}>
+                <Image source={avatar} style={styles.avatar} />
+                <Text style={styles.memberName}>{member.fullname}</Text>
               </View>
-            ))}
-          </View>
+              <View style={styles.actionsContainer}>
+                <TouchableOpacity onPress={() => handleDeleteMember(member.id, member.fullname)} style={styles.deleteButton}>
+                  <Text style={styles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleEditMemberPress(member.id)} style={styles.editButton}>
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -99,6 +94,7 @@ const ViewMembersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    paddingBottom: 20, 
   },
   topBar: {
     flexDirection: 'row',
@@ -122,7 +118,7 @@ const styles = StyleSheet.create({
   },
   memberItemInfo: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     width: 50,
@@ -134,12 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   deleteButton: {
-    // borderWidth: 1,
-    // borderColor: 'red',
-    // borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginLeft: 'auto',
+    marginRight: 10, // Adjusted for spacing
   },
   deleteButtonText: {
     color: 'red',
@@ -151,7 +144,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 15,
     paddingVertical: 5,
-    marginLeft: 'auto',
   },
   editButtonText: {
     color: 'blue',
@@ -159,7 +151,8 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     flexDirection: 'row',
-    gap: 10
+    alignItems: 'center', // Ensures buttons are aligned properly
+    // Removed the gap property, adjusted spacing with marginRight in deleteButton
   }
 });
 
