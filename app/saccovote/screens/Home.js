@@ -140,8 +140,9 @@ const styles = StyleSheet.create({
         flex: 1,
       },
       container: {
-        flex: 1,
+        flexGrow: 1,
         padding: 10,
+        paddingBottom: 80,
         backgroundColor: 'white',
       },
       header: {
