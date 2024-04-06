@@ -106,7 +106,9 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.saccoContainer}>
-              <Image source={saccoLogo} style={styles.saccoLogo}/>
+              <Image 
+                source={selectedSacco && selectedSacco.sacco_logo ? {uri: selectedSacco.sacco_logo} : saccoLogo} 
+                style={styles.saccoLogo} resizeMode='contain'/>
               <Text style={styles.saccoText}>{selectedSacco?.sacco_name}</Text>
             </View>
             <View style={styles.header}>
@@ -236,10 +238,12 @@ const styles = StyleSheet.create({
       },
       saccoContainer: {
         alignItems: 'center',
-        margin: 40
+        margin: 40,
+        flex: 1,
       },
       saccoLogo: {
-        width: 100,
+        flex: 1,
+        width: 200,
         height: 100,
       },
       saccoText: {
