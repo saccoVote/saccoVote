@@ -19,12 +19,15 @@ const AdminDashboard = ({selectedSacco}) => {
   const handleViewMemberPress = () => {
     navigation.navigate('ViewMembersScreen');
   }
+  const handleNewElectionPress = () => {
+    navigation.navigate('NewElectionScreen');
+  }
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <HeaderSection />
             <SaccoSection handleManageSaccoPress={handleManageSaccoPress} selectedSacco={selectedSacco}/>
             <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} selectedSacco={selectedSacco} />
-            <ElectionsSection />
+            <ElectionsSection handleNewElectionPress={handleNewElectionPress} />
         </ScrollView>
     );
     
@@ -85,10 +88,10 @@ const MembersSection = ({ handleAddMemberPress, handleViewMemberPress }) => {
   );
 };
 
-const ElectionsSection = () => {
+const ElectionsSection = ({handleNewElectionPress}) => {
   return (
     <View style={styles.electionsContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleNewElectionPress}>
         <MaterialCommunityIcons name="vote-outline" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>Start a new election</Text>
       </TouchableOpacity>
@@ -109,6 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 20,
     paddingHorizontal: 16,
+    paddingBottom: 80,
   },
   headerContainer: {
     marginBottom: 20,

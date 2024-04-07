@@ -3,15 +3,16 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default class BaseService {
-    static instances = {};
+    // TODO: reenable singleton later. Currently Expo has a weird bug that keeps old state interfering with these services.
+    // static instances = {};
 
-    constructor() {
-        const className = this.constructor.name;
-        if (!BaseService.instances[className]) {
-            BaseService.instances[className] = this;
-        }
-        return BaseService.instances[className];
-    }
+    // constructor() {
+    //     const className = this.constructor.name;
+    //     if (!BaseService.instances[className]) {
+    //         BaseService.instances[className] = this;
+    //     }
+    //     return BaseService.instances[className];
+    // }
 
     get API_URL() {
         return API_URL;

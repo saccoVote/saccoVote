@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, Alert } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import AddorEditElection from '../components/AddorEditElection'
 import electionService from '../services/ElectionService'
 
 
-const NewElectionScreen = () => {
+const EditElectionScreen = ({route}) => {
   const handleUpdateElection = async (payload, setSubmitting) => {
     setSubmitting(true)
     try {
@@ -24,11 +24,11 @@ const NewElectionScreen = () => {
   }
 
   return (
-    <AddorEditElection handleSubmitElection={handleUpdateElection}/>
+    <AddorEditElection handleSubmitElection={handleUpdateElection} electionId={route.params?.id}/>
   )
 }
 
 
 const styles = StyleSheet.create({})
 
-export default NewElectionScreen
+export default EditElectionScreen

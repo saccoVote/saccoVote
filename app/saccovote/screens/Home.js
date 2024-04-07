@@ -126,11 +126,13 @@ const HomeScreen = () => {
                 </View>
               ))}
             </ScrollView>
+            <Text style={styles.headerTitle}>Ongoing Elections (1)</Text>
+            {ongoingElections.map((item) => renderElectionItem({ item, section: 'ongoing' }))}
+           
             <Text style={styles.headerTitle}>Upcoming Elections (2)</Text>
             {upcomingElections.map((item) => renderElectionItem({ item, section: 'upcoming' }))}
     
-            <Text style={styles.headerTitle}>Ongoing Elections (1)</Text>
-            {ongoingElections.map((item) => renderElectionItem({ item, section: 'ongoing' }))}
+            
           </ScrollView> 
         </View>
     ); 

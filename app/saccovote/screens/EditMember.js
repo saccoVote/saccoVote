@@ -22,7 +22,6 @@ const EditMemberScreen = ({route}) => {
     } catch (error) {
       setSubmitting(false)
       Alert.alert('An error occured')
-      console.debug(error)
     }
   }
 

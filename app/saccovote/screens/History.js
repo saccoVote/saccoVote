@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 
 const HistoryScreen = () => {
   const roles = [
@@ -8,22 +8,25 @@ const HistoryScreen = () => {
     { title: 'Credit committee member', name: 'John Doe', term: '18th Sep, 2023 - 25 Oct, 2023', image: require('../assets/images/profile.png') },
     { title: 'Risk management committee member', name: 'John Doe', term: '18th Sep, 2023 - 25 Oct, 2023', image: require('../assets/images/profile.png') },
     { title: 'Chairperson', name: 'John Doe', term: '18th Sep, 2023 - 25 Oct, 2023', image: require('../assets/images/profile.png') },
+    { title: 'Chairperson', name: 'John Doe', term: '18th Sep, 2023 - 25 Oct, 2023', image: require('../assets/images/profile.png') },
   ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Elections | History</Text>
-      {roles.map((election, index) => (
-        <View key={index} style={styles.recentElectionCard}>
-          <View style={styles.recentElectionTextContainer}>
-            <Text style={styles.recentElectionRole}>{election.title}</Text>
-            <Text style={styles.recentElectionName}>{election.name}</Text>
-            <Text style={styles.recentElectionName}>{election.term}</Text>
+    <ScrollView style={styles.container}>
+      <View style={{marginBottom: 20, paddingBottom: 80}}>
+        <Text style={styles.title}>Elections | History</Text>
+        {roles.map((election, index) => (
+          <View key={index} style={styles.recentElectionCard}>
+            <View style={styles.recentElectionTextContainer}>
+              <Text style={styles.recentElectionRole}>{election.title}</Text>
+              <Text style={styles.recentElectionName}>{election.name}</Text>
+              <Text style={styles.recentElectionName}>{election.term}</Text>
+            </View>
+            <Image source={election.image} style={styles.recentElectionAvatar} />
           </View>
-          <Image source={election.image} style={styles.recentElectionAvatar} />
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: 'white',
+    paddingBottom: 80,
   },
   title: {
     fontSize: 24,

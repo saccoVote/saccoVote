@@ -33,7 +33,7 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
     if (response.ok) {
       const user = await response.json()
       setFullname(user.fullname)
-      setEmail(user.email) // TODO: in a few
+      setEmail(user.email)
       setMemberId(user.member_id)
       setPosition(user.position)
       setIsAdmin(user.role == 'admin')
@@ -46,7 +46,7 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
     // fetch sacco fullname
     fetchSelectedSacco()
     // fetch current user info and prepopulate form
-    fetchUser()
+    if(userId) fetchUser()
   }, [userId]))
 
   return (
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingBottom: 80,
   },
   headerContainer: {
     marginBottom: 20,

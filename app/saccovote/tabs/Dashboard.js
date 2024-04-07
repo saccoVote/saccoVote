@@ -6,7 +6,7 @@ import AddMemberScreen from '../screens/AddMember';
 import EditMemberScreen from '../screens/EditMember';
 import ManageSaccoScreen from '../screens/ManageSacco';
 import ViewMembersScreen from '../screens/ViewMembers';
-// import AddorEditMember from '../components/AddorEditMember';
+import NewElectionScreen from '../screens/NewElection';
 
 const DashboardTab = ({ navigation }) => {
 
@@ -20,6 +20,7 @@ const DashboardTab = ({ navigation }) => {
       <Stack.Screen name="EditMemberScreen" component={EditMemberScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="ManageSaccoScreen" component={ManageSaccoScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="ViewMembersScreen" component={ViewMembersScreen} options = {{headerShown:false}}/>
+      <Stack.Screen name="NewElectionScreen" component={NewElectionScreen} options = {{headerShown:false}}/>
     </Stack.Navigator>
   );
 };

@@ -94,7 +94,7 @@ const ViewMembersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingBottom: 20, 
+    paddingBottom: 80, 
   },
   topBar: {
     flexDirection: 'row',
