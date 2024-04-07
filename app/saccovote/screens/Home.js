@@ -18,13 +18,13 @@ const recentElections = [
   ];
   
   const upcomingElections = [
-    { id: '3', title: 'Secretary - Risk Management Committee', candidates: 5, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
-    { id: '4', title: 'Supervisory Committee Member', candidates: 5, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+    { id: '3', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-02-02T00:00:00Z', end_date: '2024-02-07T00:00:00Z' },
+    { id: '4', title: 'Supervisory Committee Member', candidates_count: 5, start_date: '2024-02-02T00:00:00Z', end_date: '2024-02-07T00:00:00Z' },
     
   ];
   
   const ongoingElections = [
-    { id: '5', title: 'Credit Committee Internal Auditor', candidates: 4, startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+    { id: '5', title: 'Credit Committee Internal Auditor', candidates_count: 4, start_date: '2024-02-02T00:00:00Z', end_date: '2024-02-07T00:00:00Z' },
     
 
   ];
@@ -87,7 +87,7 @@ const HomeScreen = () => {
               <View>
                 <Text style={styles.electionTitle}>{item.title || item.role}</Text>
                 {section !== 'recent' && (
-                  <Text style={styles.candidateText}>{item.candidates} candidates - {item.startDate} to {item.endDate}</Text>
+                  <Text style={styles.candidateText}>{item.candidates_count} candidates - {item.start_date} to {item.end_date}</Text>
                 )}
               </View>
             </View>

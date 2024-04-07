@@ -15,7 +15,7 @@ const UpcomingElectionScreen = () => {
       <Text style={styles.title}>Upcoming Election</Text>
       <Text style={styles.subtitle}>Secretary - Risk Management Committee</Text>
       <Text style={styles.details}>5 candidates</Text>
-      <Text style={styles.details}>Starts on 2nd Feb, 2024 until 7th Feb, 2024</Text>
+      <Text style={styles.details}>Starts on 2024-02-02T00:00:00Z until 2024-02-07T00:00:00Z</Text>
       <Text style={styles.sectionTitle}>Candidates</Text>
       {candidates.map((election) => (
         <View key={election.id} style={styles.recentElectionCard}>

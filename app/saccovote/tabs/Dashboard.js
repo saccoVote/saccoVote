@@ -7,6 +7,8 @@ import EditMemberScreen from '../screens/EditMember';
 import ManageSaccoScreen from '../screens/ManageSacco';
 import ViewMembersScreen from '../screens/ViewMembers';
 import NewElectionScreen from '../screens/NewElection';
+import ManageElectionsScreen from '../screens/ManageElections';
+
 
 const DashboardTab = ({ navigation }) => {
 
@@ -21,6 +23,7 @@ const DashboardTab = ({ navigation }) => {
       <Stack.Screen name="ManageSaccoScreen" component={ManageSaccoScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="ViewMembersScreen" component={ViewMembersScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="NewElectionScreen" component={NewElectionScreen} options = {{headerShown:false}}/>
+      <Stack.Screen name="ManageElectionsScreen" component={ManageElectionsScreen} options = {{headerShown:false}}/>
     </Stack.Navigator>
   );
 };

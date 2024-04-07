@@ -5,7 +5,7 @@ import ElectionCard from '../components/ElectionCard';
 
 const avatar = require('../assets/images/profile.png')
 
-const OngoingElectionScreen = ({navigation}) => {
+const PastElectionScreen = ({navigation}) => {
   const [election, setElection] = useState({ id: '1', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-01-03T00:00:00Z', end_date: '2024-02-07T00:00:00Z' })
   const candidates = [
     { id: '1', fullname: 'Jackson Smith' },
@@ -16,7 +16,7 @@ const OngoingElectionScreen = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Ongoing Election</Text>
+        <Text style={styles.title}>Past Election</Text>
         <ElectionCard election={election} navigation={navigation}/>
         <Text>Candidates</Text>
         <View style={styles.candidates}>
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default OngoingElectionScreen;
+export default PastElectionScreen;

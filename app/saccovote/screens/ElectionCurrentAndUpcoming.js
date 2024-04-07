@@ -1,30 +1,28 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import ElectionCard from '../components/ElectionCard'
+
 
 const electionsData = [
-  { id: '1', status: 'ongoing', startDate: '3rd Jan, 2024', endDate: '7th Feb, 2024' },
-  { id: '2', status: 'ongoing', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
-  { id: '3', status: 'soon', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
-  { id: '4', status: 'soon', startDate: '2nd Feb, 2024', endDate: '7th Feb, 2024' },
+  { id: '1', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-04-03T00:00:00Z', end_date: '2024-04-21T00:00:00Z' },
+  { id: '2', title: 'Chairperson - Risk Management Committee', candidates_count: 5, start_date: '2024-03-29T00:00:00Z', end_date: '2024-04-17T00:00:00Z' },
+  { id: '3', title: 'Credit Committee Member', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
+  { id: '4', title: 'Treasurer - Credit Management Committee', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
+  { id: '5', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
 ];
 
-const ElectionCurrentAndUpcomingScreen = ({navigation}) => {
+const ElectionCurrentAndUpcomingScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Elections | Upcoming & Ongoing</Text>
-      {electionsData.map((election, index) => (
-        <TouchableOpacity key={election.id} onPress={() => {
-          navigation.navigate("ElectionCurrentAndUpcomingTab",{screen:"OngoingElectionScreen"})
-        }}>
-          <View  style={styles.electionItem}>
-            <Text style={styles.position}>Secretary - Risk Management Committee</Text>
-            <Text style={styles.candidatesCount}>5 candidates</Text>
-            <Text style={styles.status(election.status)}>{election.status}</Text>
-            <Text style={styles.dates}>Starts on {election.startDate} until {election.endDate}</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.header}>Elections | Upcoming & Ongoing</Text>
+        <View style={styles.elections}>
+          {electionsData.map((election) => (
+            <ElectionCard key={election.id} election={election} navigation={navigation}/>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -32,7 +30,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 80,
   },
   header: {
     fontSize: 22,
@@ -40,30 +39,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  electionItem: {
-    marginBottom: 15,
+  elections: {
+    gap: 15,
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  position: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  candidatesCount: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  status: (status) => ({
-    fontSize: 16,
-    color: status === 'ongoing' ? 'green' : 'grey',
-    fontWeight: 'bold',
-    textAlign: 'right',
-  }),
-  dates: {
-    fontSize: 14,
-  },
+  }
 });
 
 export default ElectionCurrentAndUpcomingScreen;
