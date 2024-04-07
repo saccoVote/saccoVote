@@ -1,7 +1,7 @@
 import Checkbox from 'expo-checkbox';
 import React, { useState, useEffect } from "react";
 import {useFocusEffect} from '@react-navigation/native';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, Platform } from 'react-native';
 import saccoUserService from '../services/SaccoUserService';
 import saccoService from '../services/SaccoService';
 import { useNavigation } from '@react-navigation/native';
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingBottom: 80,
+    paddingBottom: 200,
   },
   headerContainer: {
     marginBottom: 20,

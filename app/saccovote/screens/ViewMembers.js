@@ -72,8 +72,17 @@ const ViewMembersScreen = ({ navigation }) => {
           {members.map((member) => (
             <View key={member.id} style={styles.memberItem}>
               <View style={styles.memberItemInfo}>
-                <Image source={avatar} style={styles.avatar} />
-                <Text style={styles.memberName}>{member.fullname}</Text>
+                {/* TODO:
+                Add more data on handleMemberProfilePress...... */}
+
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('PublicProfileScreen', { id: member.id })}
+                  style={{ flexDirection: 'row', alignItems: 'center' }} // Add your additional in-line styles here
+                >
+                  <Image source={avatar} style={styles.avatar} />
+                  <Text style={styles.memberName}>{member.fullname}</Text>
+                </TouchableOpacity>
+
               </View>
               <View style={styles.actionsContainer}>
                 <TouchableOpacity onPress={() => handleDeleteMember(member.id, member.fullname)} style={styles.deleteButton}>
@@ -94,7 +103,7 @@ const ViewMembersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingBottom: 80, 
+    paddingBottom: 80,
   },
   topBar: {
     flexDirection: 'row',
