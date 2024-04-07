@@ -1,9 +1,13 @@
 // the main screen after sign in
 import authService from '../services/AuthService';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useFocusEffect} from '@react-navigation/native';
+import saccoService from '../services/SaccoService'
 
+
+const saccoLogo = require('../assets/images/logo2.png')
 
 const recentElections = [
     { id: '1', role: 'Chairperson', name: 'John Doe', image: require('../assets/images/profile.png') },
@@ -25,6 +29,16 @@ const recentElections = [
 
   ];
 const HomeScreen = () => {
+  const [selectedSacco, setSelectedSacco] = useState(null)
+  const fetchSelectedSacco = async () => {
+      response = await saccoService.getSelectedSacco()
+      if (response.ok) {
+          setSelectedSacco(await response.json())
+      } else {
+          // TODO: Either no sacco selected, it has been deleted, or network issues
+          // Handle however you wish. e.g. show dialog to reload or go to sacco switcher
+      }
+  }
     // TODO: implement the actual home from figma. also make the bottom navigation as a component that will be reused across screens.
 
 
@@ -58,6 +72,11 @@ const HomeScreen = () => {
 
     ); */
 
+    useFocusEffect(React.useCallback(() => {
+      fetchSelectedSacco()
+    }, []))
+  
+
     const renderElectionItem = ({ item, section }) => {
         return (
           <TouchableOpacity key={item.id} style={styles.electionItem} onPress={() => {/* Handle press event */ }}>
@@ -86,6 +105,12 @@ const HomeScreen = () => {
                 <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
               </TouchableOpacity>
             </View>
+            <View style={styles.saccoContainer}>
+              <Image 
+                source={selectedSacco && selectedSacco.sacco_logo ? {uri: selectedSacco.sacco_logo} : saccoLogo} 
+                style={styles.saccoLogo} resizeMode='contain'/>
+              <Text style={styles.saccoText}>{selectedSacco?.sacco_name}</Text>
+            </View>
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Recent Elections</Text>
               {/* Additional components */}
@@ -101,11 +126,13 @@ const HomeScreen = () => {
                 </View>
               ))}
             </ScrollView>
+            <Text style={styles.headerTitle}>Ongoing Elections (1)</Text>
+            {ongoingElections.map((item) => renderElectionItem({ item, section: 'ongoing' }))}
+           
             <Text style={styles.headerTitle}>Upcoming Elections (2)</Text>
             {upcomingElections.map((item) => renderElectionItem({ item, section: 'upcoming' }))}
     
-            <Text style={styles.headerTitle}>Ongoing Elections (1)</Text>
-            {ongoingElections.map((item) => renderElectionItem({ item, section: 'ongoing' }))}
+            
           </ScrollView> 
         </View>
     ); 
@@ -117,8 +144,9 @@ const styles = StyleSheet.create({
         flex: 1,
       },
       container: {
-        flex: 1,
+        flexGrow: 1,
         padding: 10,
+        paddingBottom: 80,
         backgroundColor: 'white',
       },
       header: {
@@ -210,6 +238,20 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         padding: 10,
       },
+      saccoContainer: {
+        alignItems: 'center',
+        margin: 40,
+        flex: 1,
+      },
+      saccoLogo: {
+        flex: 1,
+        width: 200,
+        height: 100,
+      },
+      saccoText: {
+        fontWeight: 'bold',
+        fontSize: 24
+      }
 }) 
 
 

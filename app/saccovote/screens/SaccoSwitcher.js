@@ -1,39 +1,47 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity} from "react-native";
+import React, { useState, useEffect } from "react"; // Import useEffect
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthService from "../services/AuthService";
 
-
-const saccos = [
-  {id: '1', name: 'Mapambo sacco'},
-  {id: '2', name: 'Sacco Name'},
-  {id: '3', name: 'Sacco Name'},
-];
 
 const SaccoSwitcherScreen = ({ navigation }) => {
+  const [saccos, setSaccos] = useState([]);
+
+  const fetchSaccos = async () => { 
+    const response = await AuthService.getAuthenticatedUser();
+    if (response.ok) { 
+      const jsonResponse = await response.json();
+      setSaccos(jsonResponse["user_saccos"]);
+    } else {
+      console.error('Failed to fetch sacco details:', response.statusText);
+    }
+  };
+
+  useEffect(() => {
+    fetchSaccos();
+  }, []); 
+
   const handleSelectSacco = async (saccoId) => {
-    await AsyncStorage.setItem('selectedSaccoId', saccoId)
+    await AsyncStorage.setItem('selectedSaccoId', saccoId);
     navigation.navigate('Tabs');
   };
 
-  const renderSacco = ({ sacco }) => (
-    <TouchableOpacity key={sacco.id} style={styles.saccoButton}
-onPress={() => handleSelectSacco(sacco.id)} >
-  <Text style={styles.saccoButtonText}>{sacco.name}</Text>
-</TouchableOpacity>
+  const renderSacco = (sacco) => ( 
+    <TouchableOpacity key={sacco.sacco_id} style={styles.saccoButton}
+      onPress={() => handleSelectSacco(sacco.sacco_id.toString())}>
+      <Text style={styles.saccoButtonText}>{sacco.sacco_name}</Text>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Sacco</Text>
-      {/* <FlatList
-      data={saccos}
-      renderItem={renderSacco}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.listcontainer} /> */}
-      {saccos.map(sacco=>renderSacco({sacco}))}
+      {}
+      {saccos.map(renderSacco)}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

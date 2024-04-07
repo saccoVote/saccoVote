@@ -12,3 +12,5 @@ const MemberDashboard = () => {
 
 
 const styles = StyleSheet.create({})
+
+export default MemberDashboard;

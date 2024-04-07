@@ -1,24 +1,33 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
-const AdminDashboard = ({ navigation }) => {
+
+const AdminDashboard = ({selectedSacco}) => {
+  const navigation = useNavigation()
+
   const handleManageSaccoPress = () => {
-      navigation.navigate('ManageSacco');
+      navigation.navigate('ManageSaccoScreen');
   }
 
   const handleAddMemberPress = () => {
-    navigation.navigate('AddMember');
+    // 3 nested step navigation. use for reference if needed
+    // navigation.navigate('Tabs', {screen: "DashboardTab", params: {screen: "AddMemberScreen"}});
+    navigation.navigate("AddMemberScreen")
   }
   const handleViewMemberPress = () => {
-    navigation.navigate('ViewMember');
+    navigation.navigate('ViewMembersScreen');
+  }
+  const handleNewElectionPress = () => {
+    navigation.navigate('NewElectionScreen');
   }
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <HeaderSection />
-            <SaccoSection handleManageSaccoPress={handleManageSaccoPress} />
-            <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} />
-            <ElectionsSection />
+            <SaccoSection handleManageSaccoPress={handleManageSaccoPress} selectedSacco={selectedSacco}/>
+            <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} selectedSacco={selectedSacco} />
+            <ElectionsSection handleNewElectionPress={handleNewElectionPress} />
         </ScrollView>
     );
     
@@ -26,19 +35,19 @@ const AdminDashboard = ({ navigation }) => {
 
 
 
-const HeaderSection = () => {
+const HeaderSection = ({selectedSacco}) => {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.topBar}>
         <MaterialCommunityIcons name="bell-outline" size={30} color="#000" />
       </View>
       <Text style={styles.headerText}>Welcome Back, Doe</Text>
-      <Text style={styles.subHeaderText}>Manage your sacco lorem ipsum lorem</Text>
+      <Text style={styles.subHeaderText}>Manage your sacco {selectedSacco?.sacco_name}</Text>
     </View>
   );
 };
 
-const SaccoSection = ({ handleManageSaccoPress }) => {
+const SaccoSection = ({ handleManageSaccoPress, selectedSacco }) => {
   return (
       <View style={styles.saccoContainer}>
         {/* <View style = {styles.container2}>
@@ -46,7 +55,7 @@ const SaccoSection = ({ handleManageSaccoPress }) => {
         </View> */}
           <View>
               <Text style={styles.sectionTitle}>Sacco</Text>
-              <Text style={styles.saccoName}>Mapambo Sacco</Text>
+              <Text style={styles.saccoName}>{selectedSacco?.sacco_name}</Text>
           </View>
           <View>
               <Text>members</Text>
@@ -79,10 +88,10 @@ const MembersSection = ({ handleAddMemberPress, handleViewMemberPress }) => {
   );
 };
 
-const ElectionsSection = () => {
+const ElectionsSection = ({handleNewElectionPress}) => {
   return (
     <View style={styles.electionsContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleNewElectionPress}>
         <MaterialCommunityIcons name="vote-outline" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>Start a new election</Text>
       </TouchableOpacity>
@@ -103,6 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 20,
     paddingHorizontal: 16,
+    paddingBottom: 80,
   },
   headerContainer: {
     marginBottom: 20,

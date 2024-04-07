@@ -3,14 +3,16 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default class BaseService {
-    static #instance;
-    
-    constructor() {
-        if (!BaseService.#instance) {
-            BaseService.#instance = this;
-        }
-        return BaseService.#instance;
-    }
+    // TODO: reenable singleton later. Currently Expo has a weird bug that keeps old state interfering with these services.
+    // static instances = {};
+
+    // constructor() {
+    //     const className = this.constructor.name;
+    //     if (!BaseService.instances[className]) {
+    //         BaseService.instances[className] = this;
+    //     }
+    //     return BaseService.instances[className];
+    // }
 
     get API_URL() {
         return API_URL;
@@ -18,9 +20,10 @@ export default class BaseService {
 
     // Method to intercept requests and add Authorization token
     async #fetch(endpoint, options = {}, withToken = true) {
-        console.log("Fetching...");
+        console.log("Fetching...........");
         const headers = new Headers(options.headers || {});
         if (withToken) {
+            //TODO:
             const token = await AsyncStorage.getItem('token');
             headers.append('Authorization', `Token ${token}`);
         }
@@ -29,6 +32,8 @@ export default class BaseService {
             ...options,
             headers,
         });
+        
+        
     }
 
     #getOptions(method, payload) {
