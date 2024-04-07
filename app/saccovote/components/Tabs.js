@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import HomeScreen from '../screens/Home';
 import DashboardTab from '../tabs/Dashboard';
 import ElectionCurrentAndUpcomingTab from '../tabs/ElectionCurrentAndUpcoming';
-import HistoryScreen from '../screens/History';
+import HistoryTab from '../tabs/History';
 import MoreTab from '../tabs/More';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,8 +27,8 @@ const Tabs = ({navigation}) => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName='HomeScreen' >
       <Tab.Screen
-        name="History"
-        component={HistoryScreen}
+        name="HistoryTab"
+        component={HistoryTab}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

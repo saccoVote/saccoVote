@@ -20,7 +20,7 @@ export default class BaseService {
 
     // Method to intercept requests and add Authorization token
     async #fetch(endpoint, options = {}, withToken = true) {
-        console.log("Fetching...........");
+        console.debug(`Fetching - ${options.method ?? 'GET'}: ${this.API_URL}${endpoint} ...........`);
         const headers = new Headers(options.headers || {});
         if (withToken) {
             //TODO:
@@ -32,8 +32,6 @@ export default class BaseService {
             ...options,
             headers,
         });
-        
-        
     }
 
     #getOptions(method, payload) {

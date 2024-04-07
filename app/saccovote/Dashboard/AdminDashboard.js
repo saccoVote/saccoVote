@@ -22,12 +22,15 @@ const AdminDashboard = ({selectedSacco}) => {
   const handleNewElectionPress = () => {
     navigation.navigate('NewElectionScreen');
   }
+
+  const handleManageElectionsPress = () => navigation.navigate('ManageElectionsScreen')
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <HeaderSection />
             <SaccoSection handleManageSaccoPress={handleManageSaccoPress} selectedSacco={selectedSacco}/>
             <MembersSection handleAddMemberPress={handleAddMemberPress} handleViewMemberPress={handleViewMemberPress} selectedSacco={selectedSacco} />
-            <ElectionsSection handleNewElectionPress={handleNewElectionPress} />
+            <ElectionsSection handleNewElectionPress={handleNewElectionPress} handleManageElectionsPress={handleManageElectionsPress}/>
         </ScrollView>
     );
     
@@ -88,14 +91,14 @@ const MembersSection = ({ handleAddMemberPress, handleViewMemberPress }) => {
   );
 };
 
-const ElectionsSection = ({handleNewElectionPress}) => {
+const ElectionsSection = ({handleNewElectionPress, handleManageElectionsPress}) => {
   return (
     <View style={styles.electionsContainer}>
       <TouchableOpacity style={styles.button} onPress={handleNewElectionPress}>
         <MaterialCommunityIcons name="vote-outline" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>Start a new election</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleManageElectionsPress}>
         <MaterialCommunityIcons name="format-list-checks" size={24} color="#000" style={styles.icon} />
         <Text style={styles.buttonText}>manage elections</Text>
       </TouchableOpacity>
