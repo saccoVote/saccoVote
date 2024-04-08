@@ -59,7 +59,9 @@ class SaccoUserViewSet(viewsets.ModelViewSet):
             send_email(
                 "You've been added as {role} of {sacco_name} in saccoVote"
                 .format(
-                    role='an admin' if request.data.get('role') == 'admin' else 'a '+request.data.get('role'),
+                    role='an admin and vetter' if request.data.get('role') == 'admin' and request.data.get('is_vetter')
+                    else ('an admin' if request.data.get('role') == 'admin'
+                          else 'a ' + request.data.get('role', 'member')),
                     sacco_name=Sacco.objects.filter(id=serializer.data.get('sacco')).first().name),
                 [request.data.get('email')], 'new-sacco-member',
                 context={

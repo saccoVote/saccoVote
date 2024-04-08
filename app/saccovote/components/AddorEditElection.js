@@ -34,8 +34,8 @@ const AddorEditElection = ({ electionId, handleSubmitElection }) => {
     if (response.ok) {
       const election = await response.json()
       setElectionTitle(election.title)
-      setStartDate(election.start_date) // TODO: convert date string to date object
-      setCloseDate(election.end_date) // TODO: convert date string to date object
+      setStartDate(new Date(election.start_date)) // TODO: convert date string to date object
+      setCloseDate(new Date(election.end_date)) // TODO: convert date string to date object
     } else {
     }
   }
@@ -48,29 +48,34 @@ const AddorEditElection = ({ electionId, handleSubmitElection }) => {
   }, [electionId]))
 
   const formIsValid = () => {
-    if(!electionTitle || !electionTitle.trim()) {
+    if (!electionTitle || !electionTitle.trim()) {
       setElectionTitleIsValidOrPristine(false)
     } else {
       setElectionTitleIsValidOrPristine(true)
     }
-    if(new Date() > startDate) {
+    if (new Date() > startDate) {
       setStartDateIsValidOrPristine(false)
     } else {
       setStartDateIsValidOrPristine(true)
     }
-    if(new Date() > closeDate || startDate > closeDate) {
+    if (new Date() > closeDate || startDate > closeDate) {
       setCloseDateIsValidOrPristine(false)
     } else {
       setCloseDateIsValidOrPristine(true)
     }
-    
+
     return electionTitle.trim() && electionTitleIsValidOrPristine && startDateIsValidOrPristine && closeDateIsValidOrPristine
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Start a new election in {selectedSacco?.sacco_name}</Text>
-      <View style={styles.formErrors}>
+      <View style={[
+        styles.formErrors,
+        (electionTitleIsValidOrPristine && startDateIsValidOrPristine && closeDateIsValidOrPristine)
+          ? { display: 'none' }
+          : { display: 'flex' }
+      ]}>
         {!electionTitleIsValidOrPristine && <Text>Election title is required</Text>}
         {!startDateIsValidOrPristine && <Text>Election start date is not valid</Text>}
         {!closeDateIsValidOrPristine && <Text>Election end date is not valid</Text>}
@@ -113,7 +118,7 @@ const AddorEditElection = ({ electionId, handleSubmitElection }) => {
             </>
             :
             <TouchableOpacity disabled={submitting} style={styles.addButton} onPress={() => {
-              if(formIsValid()) {
+              if (formIsValid()) {
                 handleSubmitElection({
                   title: electionTitle, start_date: startDate.toISOString(), end_date: closeDate.toISOString(),
                 }, setSubmitting)
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   label: {
+    fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 10,
   },

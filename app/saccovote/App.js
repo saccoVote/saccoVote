@@ -30,7 +30,6 @@ const App = () => {
           <Stack.Screen name="SaccoSwitcherScreen" component={SaccoSwitcherScreen} options = {{headerShown:false}}/>
 
           <Stack.Screen name="Tabs" component={Tabs} options = {{headerShown:false}}/>
-          
 
           <Stack.Screen name="ProfileManagement" component={ProfileManagement} options = {{headerShown:false}}/>
           <Stack.Screen name="FingerPrint" component={FingerPrint} options = {{headerShown:false}}/>
