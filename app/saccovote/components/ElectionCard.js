@@ -1,57 +1,41 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native'
-import React, {useState} from 'react'
-import {useFocusEffect} from '@react-navigation/native';
-import {getFormattedDateTimeFromTimeStamp} from '../utils'
+import React, { useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native';
+import { getFormattedDateTimeFromTimeStamp } from '../utils'
 
 
 const ElectionCard = ({ election, navigation }) => {
-
-    // useFocusEffect(React.useCallback(() => {
-    //     // past
-    //     if(new Date(election.end_date) < new Date()) {
-    //         setElectionStatus('past')
-    //     }
-    //     // ongoing
-    //     else if(new Date(election.start_date) < new Date()) {
-    //         setElectionStatus('ongoing')
-    //     } else {
-    //         // upcoming
-    //         setElectionStatus('upcoming')
-    //     }
-    //   }, [election]))
-
     const getElectionStatus = () => {
-                // past
-                if(new Date(election.end_date) < new Date()) {
-                    return 'past'
-                }
-                // ongoing
-                else if(new Date(election.start_date) < new Date()) {
-                    return 'ongoing'
-                } else {
-                    // upcoming
-                    return 'upcoming'
-                }
+        // past
+        if (new Date(election.end_date) < new Date()) {
+            return 'past'
+        }
+        // ongoing
+        else if (new Date(election.start_date) < new Date()) {
+            return 'ongoing'
+        } else {
+            // upcoming
+            return 'upcoming'
+        }
     }
 
     return (
         <TouchableOpacity style={styles.electionCard} onPress={() => {
-            console.debug('>>> status ', getElectionStatus(), election.end_date)
-            if(getElectionStatus() == 'past') {
-                navigation.navigate("HistoryTab", { screen: "PastElectionScreen", params: {id: election.id} })
+            if (getElectionStatus() == 'past') {
+                navigation.navigate("HistoryTab", { screen: "PastElectionScreen", params: { id: election.id } })
             } else {
-                navigation.navigate("ElectionCurrentAndUpcomingTab", { screen: "OngoingElectionScreen" })
+                navigation.navigate("ElectionCurrentAndUpcomingTab", { screen: "OngoingElectionScreen", params: { id: election.id } })
             }
         }}>
             <ImageBackground
-            source={require('../assets/images/vote-background-image.jpg')}
-            style={{
-              height: '100%',
-              width: '100%',
-              opacity: 0.3,
-              position: 'absolute',
-            }}
-          />
+                source={require('../assets/images/vote-background-image.jpg')}
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    opacity: 0.3,
+                    position: 'absolute',
+                }}
+            />
             <View style={styles.electionItem}>
                 <Text style={styles.candidatesCount}>{election.candidates_count} candidates</Text>
                 <Text style={styles.electionTitle}>{election.title}</Text>
@@ -66,12 +50,11 @@ const ElectionCard = ({ election, navigation }) => {
 const styles = StyleSheet.create(
     {
         electionCard: {
-            boxShadow: '0px 0px 0px 1px rgb(140 140 140/.2) ,0px 4px 4px rgb(0 0 0/.3)',
             borderRadius: 5,
             marginBottom: 15,
         },
         electionItem: {
-            padding: 5,        
+            padding: 5,
             justifyContent: 'space-between',
             gap: 3,
             paddingHorizontal: 10,
@@ -88,9 +71,9 @@ const styles = StyleSheet.create(
         },
         status: (status) => ({
             fontSize: 16,
-            color: status === 'ongoing' ? 'green' : 
-                   status === 'completed' ? 'blue' :
-                   status === 'pending' ? 'orange' : 'grey',
+            color: status === 'ongoing' ? 'green' :
+                status === 'completed' ? 'blue' :
+                    status === 'pending' ? 'orange' : 'grey',
             fontWeight: 'bold',
             textAlign: 'right',
         }),

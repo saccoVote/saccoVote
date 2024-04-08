@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { DataContext } from '../context/DataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,39 +11,39 @@ const logo = require('../assets/images/logo2.png');
 const PasswordScreen = ({ navigation, route }) => {
   // const { data } = useContext(DataContext);
   const [email, setEmail] = useState(
-        route.params?.email || ''
-    );
+    route.params?.email || ''
+  );
   const [password, setPassword] = useState('')
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [signingIn, setSigningIn] = useState(false)
 
   const getEmail = async () => {
-	  const emailFromStorage = await AsyncStorage.getItem('email')
-	  if (!emailFromStorage) {
-		  navigation.navigate('EmailScreen')
-	  }
-	  setEmail(emailFromStorage)
+    const emailFromStorage = await AsyncStorage.getItem('email')
+    if (!emailFromStorage) {
+      navigation.navigate('EmailScreen')
+    }
+    setEmail(emailFromStorage)
   }
 
   useEffect(() => {
-	getEmail()
+    getEmail()
   }, [])
 
   const handleSignIn = async () => {
     // sign in
     setSigningIn(true)
-    const response = await authService.signin({email, password})
+    const response = await authService.signin({ email, password })
     //if success, go to home, otherwise toast sign in failed 
-	if (response.ok) {
-		const token = (await response.json()).token
-		await AsyncStorage.setItem('token', token)
-		setSigningIn(false)
-		navigation.navigate('SaccoSwitcherScreen');
-	} else {
-		Alert.alert('Sign in failed', 'Please check you credentials.') // TODO:
-		setSigningIn(false)
-	}
-	return
+    if (response.ok) {
+      const token = (await response.json()).token
+      await AsyncStorage.setItem('token', token)
+      setSigningIn(false)
+      navigation.navigate('SaccoSwitcherScreen');
+    } else {
+      Alert.alert('Sign in failed', 'Please check you credentials.') // TODO:
+      setSigningIn(false)
+    }
+    return
   };
 
   const togglePasswordVisibility = () => {
@@ -58,7 +58,15 @@ const PasswordScreen = ({ navigation, route }) => {
 
       <View style={Styles.welcomeContainer}>
         <Text style={Styles.welcomeBack}>Welcome back, </Text>
-        <Text style={Styles.emailText}>{email}</Text>
+        <View style={Styles.emailContainer}>
+          <Text style={Styles.emailText}>{email}</Text>
+          <TouchableOpacity style={Styles.changeEmail} onPress={ async () => {
+            await AsyncStorage.removeItem('email')
+            navigation.navigate('EmailScreen')
+          }}>
+            <Text style={Styles.changeEmail}>change email</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={Styles.keyboardAvoidingView}>
@@ -110,7 +118,7 @@ const Styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
-    marginBottom:20,
+    marginBottom: 20,
     width: 200,
     height: 200,
     resizeMode: 'contain',
@@ -130,9 +138,14 @@ const Styles = StyleSheet.create({
     // marginBottom: 30,
     // paddingTop: 40,
   },
+  emailContainer: {
+    paddingBottom: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
   emailText: {
     fontSize: 16,
-    paddingBottom: 50,
   },
   passwordText: {
     right: 100,
@@ -149,6 +162,11 @@ const Styles = StyleSheet.create({
     color: 'blue',
     left: 90,
     bottom: 30,
+  },
+  changeEmail: {
+    color: 'blue',
+    fontStyle: 'italic',
+    fontSize: 16,
   },
   keyboardAvoidingView: {
     // backgroundColor: '#D9D9D9',

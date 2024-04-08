@@ -4,7 +4,7 @@ import AddorEditElection from '../components/AddorEditElection'
 import electionService from '../services/ElectionService'
 
 
-const NewElectionScreen = () => {
+const NewElectionScreen = ({navigation}) => {
   const handleUpdateElection = async (payload, setSubmitting) => {
     setSubmitting(true)
     try {
@@ -15,7 +15,7 @@ const NewElectionScreen = () => {
       }
       else {
         setSubmitting(false)
-        Alert.alert('Successfully added')
+        Alert.alert('Successfully added', null, [{text: 'OK', onPress: () => navigation.goBack()}])
       }
     } catch {
       setSubmitting(false)

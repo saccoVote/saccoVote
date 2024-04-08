@@ -1,26 +1,37 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native';
+import electionService from "../services/ElectionService";
 import ElectionCard from '../components/ElectionCard'
 
 
-const electionsData = [
-  { id: '1', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-04-03T00:00:00Z', end_date: '2024-04-21T00:00:00Z' },
-  { id: '2', title: 'Chairperson - Risk Management Committee', candidates_count: 5, start_date: '2024-03-29T00:00:00Z', end_date: '2024-04-17T00:00:00Z' },
-  { id: '3', title: 'Credit Committee Member', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
-  { id: '4', title: 'Treasurer - Credit Management Committee', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
-  { id: '5', title: 'Secretary - Risk Management Committee', candidates_count: 5, start_date: '2024-04-28T00:00:00Z', end_date: '2024-05-07T00:00:00Z' },
-];
-
 const ElectionCurrentAndUpcomingScreen = ({ navigation }) => {
+  const [elections, setElections] = useState([])
+
+  const fetchElections = async () => {
+    response = await electionService.getElections()
+    if (response.ok) {
+      const data = await response.json()
+      setElections(data.results.filter(e => new Date(e.start_date) > new Date() || (new Date(e.start_date) < new Date() && new Date(e.end_date) > new Date())))
+    } else {
+    }
+  }
+
+  useFocusEffect(React.useCallback(() => { fetchElections() }, []))
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.header}>Elections | Upcoming & Ongoing</Text>
-        <View style={styles.elections}>
-          {electionsData.map((election) => (
-            <ElectionCard key={election.id} election={election} navigation={navigation}/>
-          ))}
-        </View>
+        {elections.length ?
+          <View style={styles.elections}>
+            {elections.map((election) => (
+              <ElectionCard key={election.id} election={election} navigation={navigation} />
+            ))}
+          </View>
+          :
+          <Text style={{textAlign: 'center', color: 'grey'}}>No upcoming or ongoing elections available at the moment</Text>
+        }
       </View>
     </ScrollView>
   );
