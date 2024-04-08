@@ -47,9 +47,10 @@ const PastElectionScreen = ({ navigation, route }) => {
             return vote.candidate == c.id ? accum + 1 : accum
           }, 0)
           const votesPercentage = (votesCount/electionVotes.length * 100).toFixed(2)
+          // console.debug('>>>', votesCount, votesPercentage)
           // percentage
           return {...c, votesCount, votesPercentage}
-        }).sort((a, b) => b.votesCount - a.votesCount))
+        }).sort((a, b) => +b.votesCount - +a.votesCount))
       } else {
       }
     } catch { }
@@ -61,7 +62,7 @@ const PastElectionScreen = ({ navigation, route }) => {
   }
 
   const loadInfo = async () => {
-    await fetchSelectedSaccoInfoFromAsyncStorage(); fetchElection(); await fetchElectionVotes(); fetchElectionCandidates();
+    await fetchSelectedSaccoInfoFromAsyncStorage(); await fetchElection(); await fetchElectionVotes(); await fetchElectionCandidates();
   }
 
   useFocusEffect(React.useCallback(() => { loadInfo() }, [route.params?.id]))
@@ -82,7 +83,7 @@ const PastElectionScreen = ({ navigation, route }) => {
       {approvedCandidates.length > 0 ? (
         approvedCandidates.map((candidate, index) => (
           <View key={index}>
-            <View key={candidate.id} style={[styles.candidateRadioCard, index == 1 ? {backgroundColor: 'green'} : {}]}>
+            <View key={candidate.id} style={[styles.candidateRadioCard, index == 0 ? {backgroundColor: '#34C759'} : {}]}>
               <View style={styles.candidateTextContainer}>
                 <Text style={styles.candidateName}>{candidate.fullname}</Text>
                 <Text>{candidate.votesCount}</Text>
