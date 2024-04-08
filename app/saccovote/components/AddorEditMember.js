@@ -1,7 +1,7 @@
 import Checkbox from 'expo-checkbox';
 import React, { useState, useEffect } from "react";
 import {useFocusEffect} from '@react-navigation/native';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, Platform } from 'react-native';
 import saccoUserService from '../services/SaccoUserService';
 import saccoService from '../services/SaccoService';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,7 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
   const [position, setPosition] = useState('');
   const [memberId, setMemberId] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isVetter, setIsVetter] = useState(false)
   const [submitting, setSubmitting] = useState(false);
   const [selectedSacco, setSelectedSacco] = useState(null)
   const navigation = useNavigation()
@@ -37,6 +38,7 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
       setMemberId(user.member_id)
       setPosition(user.position)
       setIsAdmin(user.role == 'admin')
+      setIsVetter(user.is_vetter)
     } else {
     }
   }
@@ -93,10 +95,14 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
               <TextInput style={styles.input} value={memberId} onChangeText={setMemberId} placeholder="Enter Member ID" />
             </View>
 
-            <View>
+            <View style={{gap: 5}}>
               <View style={styles.section}>
                 <Checkbox style={styles.checkbox} value={isAdmin} onValueChange={setIsAdmin} />
                 <Text style={styles.paragraph}>Admin <Text style={styles.finePrint}>(If not checked, user's role in the sacco is set to member)</Text></Text>
+              </View>
+              <View style={styles.section}>
+                <Checkbox style={styles.checkbox} value={isVetter} onValueChange={setIsVetter} />
+                <Text style={styles.paragraph}>Vetter <Text style={styles.finePrint}>(Vets election candidates (can not vote or be a candidate))</Text></Text>
               </View>
             </View>
           </View>
@@ -108,13 +114,13 @@ const AddorEditMember = ({ userId, handleSubmitMember }) => {
                   <Text style={styles.cancelButtonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.updateButton} disabled={submitting}
-                  onPress={()=> handleSubmitMember({ fullname, email, position, memberId, role: isAdmin ? 'admin' : 'member' }, setSubmitting)}>
+                  onPress={()=> handleSubmitMember({ fullname, email, position, memberId, role: isAdmin ? 'admin' : 'member', is_vetter: isVetter }, setSubmitting)}>
                   <Text style={styles.updateButtonText}>Update</Text>
                 </TouchableOpacity>
               </>
               :
               <TouchableOpacity style={styles.addButton} disabled={submitting}
-                onPress={() => handleSubmitMember({ fullname, email, position, memberId, role: isAdmin ? 'admin' : 'member' }, setSubmitting)}>
+                onPress={() => handleSubmitMember({ fullname, email, position, memberId, role: isAdmin ? 'admin' : 'member', is_vetter: isVetter }, setSubmitting)}>
                 <Text style={styles.addButtonText}>Add</Text>
               </TouchableOpacity>
             }
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingBottom: 80,
+    paddingBottom: 200,
   },
   headerContainer: {
     marginBottom: 20,

@@ -1,13 +1,13 @@
 from django.db import models
 
-from base.models import CustomUser, Election, SaccoUser
+from base.models import CustomUser, Election, SaccoUser, ElectionCandidate
 from base.models.base import BaseModel
 
 
 class Vetting(BaseModel):
     vetter = models.ForeignKey(SaccoUser, null=False, blank=False, on_delete=models.CASCADE,
                                related_name='vetter_vettings')
-    candidate = models.ForeignKey(SaccoUser, null=False, blank=False, on_delete=models.CASCADE,
+    candidate = models.ForeignKey(ElectionCandidate, null=False, blank=False, on_delete=models.CASCADE,
                                   related_name='candidate_vettings')
     election = models.ForeignKey(Election, null=False, blank=False, on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)

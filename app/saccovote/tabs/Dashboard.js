@@ -7,6 +7,10 @@ import EditMemberScreen from '../screens/EditMember';
 import ManageSaccoScreen from '../screens/ManageSacco';
 import ViewMembersScreen from '../screens/ViewMembers';
 import NewElectionScreen from '../screens/NewElection';
+import PublicProfileScreen from '../screens/PublicProfile';
+import ManageElectionsScreen from '../screens/ManageElections';
+import EditElectionScreen from '../screens/EditElection';
+
 
 const DashboardTab = ({ navigation }) => {
 
@@ -21,7 +25,10 @@ const DashboardTab = ({ navigation }) => {
       <Stack.Screen name="ManageSaccoScreen" component={ManageSaccoScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="ViewMembersScreen" component={ViewMembersScreen} options = {{headerShown:false}}/>
       <Stack.Screen name="NewElectionScreen" component={NewElectionScreen} options = {{headerShown:false}}/>
-    </Stack.Navigator>
+      <Stack.Screen name="EditElectionScreen" component={EditElectionScreen} options = {{headerShown:false}}/>
+      <Stack.Screen name="PublicProfileScreen" component={PublicProfileScreen}/>
+      <Stack.Screen name="ManageElectionsScreen" component={ManageElectionsScreen} options = {{headerShown:false}}/>
+     </Stack.Navigator>
   );
 };
 

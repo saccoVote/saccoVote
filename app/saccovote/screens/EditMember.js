@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import saccoUserService from '../services/SaccoUserService';
 
 
-const EditMemberScreen = ({route}) => {
+const EditMemberScreen = ({route, navigation}) => {
 
   const handleEditSaccoUser = async (payload, setSubmitting) => {
     setSubmitting(true)
@@ -17,7 +17,7 @@ const EditMemberScreen = ({route}) => {
       }
       else {
         setSubmitting(false)
-        Alert.alert('Successfully updated')
+        Alert.alert('Successfully updated', null, [{text: 'OK', onPress: () => navigation.goBack()}])
       }
     } catch (error) {
       setSubmitting(false)

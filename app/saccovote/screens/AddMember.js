@@ -5,7 +5,7 @@ import saccoUserService from '../services/SaccoUserService';
 import { Alert } from 'react-native';
 
 
-const AddMemberScreen = () => {
+const AddMemberScreen = ({navigation}) => {
 
   const handleAddSaccoUser = async (payload, setSubmitting) => {
     setSubmitting(true)
@@ -17,7 +17,7 @@ const AddMemberScreen = () => {
       }
       else {
         setSubmitting(false)
-        Alert.alert('Successfully added')
+        Alert.alert('Successfully added', null, [{text: 'OK', onPress: () => navigation.goBack()}])
       }
     } catch {
       setSubmitting(false)

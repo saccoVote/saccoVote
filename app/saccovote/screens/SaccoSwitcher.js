@@ -21,14 +21,15 @@ const SaccoSwitcherScreen = ({ navigation }) => {
     fetchSaccos();
   }, []); 
 
-  const handleSelectSacco = async (saccoId) => {
-    await AsyncStorage.setItem('selectedSaccoId', saccoId);
+  const handleSelectSacco = async (sacco) => {
+    await AsyncStorage.setItem('selectedSaccoId', sacco.sacco_id.toString());
+    await AsyncStorage.setItem('selectedSaccoInfo', JSON.stringify(sacco));
     navigation.navigate('Tabs');
   };
 
   const renderSacco = (sacco) => ( 
     <TouchableOpacity key={sacco.sacco_id} style={styles.saccoButton}
-      onPress={() => handleSelectSacco(sacco.sacco_id.toString())}>
+      onPress={() => handleSelectSacco(sacco)}>
       <Text style={styles.saccoButtonText}>{sacco.sacco_name}</Text>
     </TouchableOpacity>
   );

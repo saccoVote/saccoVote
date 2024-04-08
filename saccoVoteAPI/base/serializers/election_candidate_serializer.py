@@ -5,7 +5,7 @@ from base.serializers.base_election_candidate_serializer import BaseElectionCand
 
 
 class ElectionCandidateSerializer(BaseElectionCandidateSerializer):
-    is_approved = serializers.SerializerMethodField()
+    fullname = serializers.CharField(source='sacco_user.fullname', read_only=True)
 
     class Meta:
         fields = '__all__'

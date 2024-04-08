@@ -13,7 +13,7 @@ class ElectionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Election.objects.filter(sacco=self.kwargs['sacco_pk'])
+        return Election.objects.filter(sacco=self.kwargs['sacco_pk']).order_by('start_date')
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

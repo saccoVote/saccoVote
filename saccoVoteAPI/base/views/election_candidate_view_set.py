@@ -17,7 +17,9 @@ class ElectionCandidateViewSet(CreateModelMixin, ListModelMixin, DestroyModelMix
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return ElectionCandidate.objects.filter(election__sacco_id=self.kwargs.get('sacco_pk'))
+        return ElectionCandidate.objects.filter(
+            election__sacco_id=self.kwargs.get('sacco_pk'),
+            election_id=self.kwargs.get('election_pk'))
 
     def get_serializer_class(self):
         if self.action in ['create', 'destroy']:
