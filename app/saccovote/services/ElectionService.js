@@ -28,6 +28,9 @@ class ElectionService extends BaseService {
     async vote(electionId, candidate){
         return this.post(`/saccos/${await AsyncStorage.getItem('selectedSaccoId')}/elections/${electionId}/votes/`, {candidate})
     }
+    async getElectionVotes(electionId){
+        return this.get(`/saccos/${await AsyncStorage.getItem('selectedSaccoId')}/elections/${electionId}/votes/`)
+    }
 }
 
 export default new ElectionService()
